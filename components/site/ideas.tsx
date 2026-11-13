@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { IDEAS, type Idea } from "@/lib/ideas";
 import { ADULT, KIDS, eur } from "@/lib/pricing";
 
@@ -29,10 +30,23 @@ function IdeaCard({ idea }: { idea: Idea }) {
   );
 }
 
+const FIRST = 6;
+
 export function Ideas() {
+  const [all, setAll] = React.useState(false);
+  const list = all ? IDEAS : IDEAS.slice(0, FIRST);
   return (
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {IDEAS.map((idea) => <IdeaCard key={idea.id} idea={idea} />)}
-    </div>
+    <>
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {list.map((idea) => <IdeaCard key={idea.id} idea={idea} />)}
+      </div>
+      {IDEAS.length > FIRST && (
+        <div className="mt-8 flex justify-center">
+          <button type="button" aria-expanded={all} onClick={() => setAll((v) => !v)} className="rounded-full border border-border px-6 py-3 text-sm font-medium outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring">
+            {all ? "Ver menos ideias" : `Ver mais ideias (${IDEAS.length - FIRST})`}
+          </button>
+        </div>
+      )}
+    </>
   );
 }
