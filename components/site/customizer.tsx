@@ -5,6 +5,7 @@ import { GarmentPreview, type GarmentKind } from "@/components/ui/product-rail-g
 import { ADULT, KIDS, SIZES, eur } from "@/lib/pricing";
 import { estimate } from "@/lib/estimate";
 import { CONTACT } from "@/lib/contact";
+import { SWEAT_PHOTO, SWEAT_RATIO } from "@/lib/sweat";
 
 const PIECES = [...ADULT, ...KIDS];
 const ART: Record<string, GarmentKind> = {
@@ -28,6 +29,13 @@ function place(side: Side, size: number) {
   const { w, h } = BOX[size];
   if (side === "front") return size === 0 ? { x: 124 - w / 2, y: 78, w, h } : { x: 100 - w / 2, y: size === 1 ? 74 : 70, w, h };
   return { x: 100 - w / 2, y: 66 - size * 3, w, h };
+}
+// Sweat em fotografia: o peito tem cerca de 190 px para ~56 cm (≈ 3,4 px/cm)
+const PBOX = [{ w: 34, h: 34 }, { w: 71, h: 102 }, { w: 95, h: 119 }];
+function placePhoto(side: Side, size: number) {
+  const { w, h } = PBOX[size];
+  if (side === "front") return size === 0 ? { x: 262 - w / 2, y: 92, w, h } : { x: 207 - w / 2, y: size === 1 ? 92 : 84, w, h };
+  return { x: 207 - w / 2, y: 66 - size * 4, w, h };
 }
 function isDark(hex: string) {
   const n = parseInt(hex.slice(1), 16);
@@ -53,9 +61,17 @@ export function Customizer() {
   const both = has("front") && has("back");
   const primary = has("front") ? design.front.size : has("back") ? design.back.size : cur.size;
   const est = estimate(piece, { sizeIdx: primary, qty, extra: both, nameX, photo });
-  const box = place(side, cur.size);
+  const photoMode = pieceId === "sweat";
+  const box = photoMode ? placePhoto(side, cur.size) : place(side, cur.size);
   const ink = isDark(color.hex) ? "#fbf7ec" : "#2a211b";
   const fs = Math.max(6, Math.min(box.h * 0.45, (box.w / Math.max(cur.text.trim().length, 1)) * 1.7));
+  const overlay = cur.img ? (
+    <image href={cur.img} x={box.x} y={box.y} width={box.w} height={box.h} preserveAspectRatio="xMidYMid meet" />
+  ) : cur.text.trim() ? (
+    <text x={box.x + box.w / 2} y={box.y + box.h / 2} textAnchor="middle" dominantBaseline="central" fontSize={fs} fontWeight="700" fill={ink} fontFamily="Georgia, serif">{cur.text.trim()}</text>
+  ) : (
+    <rect x={box.x} y={box.y} width={box.w} height={box.h} rx="2" fill="none" stroke={ink} strokeOpacity="0.55" strokeDasharray="3 2.5" strokeWidth="0.9" />
+  );
 
   function onFile(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
@@ -82,16 +98,17 @@ export function Customizer() {
     <form onSubmit={submit} className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-start">
       <div className="lg:sticky lg:top-20">
         <div className="rounded-3xl border border-border bg-muted p-6 sm:p-8">
-          <GarmentPreview kind={ART[pieceId]} side={side} color={color.hex} className="mx-auto -mb-[28%] w-full max-w-[19rem] drop-shadow-[0_18px_14px_rgba(0,0,0,0.18)]">
-            {cur.img ? (
-              <image href={cur.img} x={box.x} y={box.y} width={box.w} height={box.h} preserveAspectRatio="xMidYMid meet" />
-            ) : cur.text.trim() ? (
-              <text x={box.x + box.w / 2} y={box.y + box.h / 2} textAnchor="middle" dominantBaseline="central" fontSize={fs} fontWeight="700" fill={ink} fontFamily="Georgia, serif">{cur.text.trim()}</text>
-            ) : (
-              <rect x={box.x} y={box.y} width={box.w} height={box.h} rx="2" fill="none" stroke={ink} strokeOpacity="0.55" strokeDasharray="3 2.5" strokeWidth="0.9" />
-            )}
-          </GarmentPreview>
-          <p className="mt-4 text-center text-xs text-muted-foreground">Pré-visualização ilustrativa. Enviamos a prova real antes de pagares.</p>
+          {photoMode ? (
+            <div className="relative mx-auto aspect-[415/474] w-full max-w-[22rem] drop-shadow-[0_18px_14px_rgba(0,0,0,0.2)]">
+              <img src={SWEAT_PHOTO[color.name]} alt={`Sweat ${color.name.toLowerCase()}`} draggable={false} className="absolute inset-0 size-full select-none" />
+              <svg aria-hidden="true" viewBox={`0 0 ${SWEAT_RATIO.w} ${SWEAT_RATIO.h}`} className="absolute inset-0 size-full overflow-visible">{overlay}</svg>
+            </div>
+          ) : (
+            <GarmentPreview kind={ART[pieceId]} side={side} color={color.hex} className="mx-auto -mb-[28%] w-full max-w-[19rem] drop-shadow-[0_18px_14px_rgba(0,0,0,0.18)]">
+              {overlay}
+            </GarmentPreview>
+          )}
+          <p className="mt-4 text-center text-xs text-muted-foreground">{photoMode && side === "back" ? "Costas: mesmo corte da peça. " : ""}Pré-visualização ilustrativa. Enviamos a prova real antes de pagares.</p>
         </div>
       </div>
 
