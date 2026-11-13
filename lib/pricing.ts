@@ -18,19 +18,19 @@ export type Piece = {
 };
 
 export const ADULT: Piece[] = [
-  { id: "tshirt", name: "T-shirt clássica", note: "Algodão 190 g", prices: [11.9, 14.9, 16.9], group: [11.5, 9.9] },
-  { id: "oversize", name: "T-shirt oversize", prices: [19.9, 22.9, 26.9] },
-  { id: "manga", name: "Manga comprida", prices: [14.9, 17.9, null] },
-  { id: "sweat", name: "Sweat sem capuz", prices: [24.9, 29.9, 34.9], group: [22.9, 20.9] },
-  { id: "capuz", name: "Sweat com capuz", prices: [29.9, 32.9, 36.9], group: [26.9, 24.9] },
+  { id: "tshirt", name: "T-shirt clássica", note: "Algodão 190 g", prices: [10.9, 13.9, 15.9], group: [11.5, 9.9] },
+  { id: "oversize", name: "T-shirt oversize", prices: [17.9, 19.9, 22.9] },
+  { id: "manga", name: "Manga comprida", prices: [12.9, 15.9, 17.9] },
+  { id: "sweat", name: "Sweat sem capuz", prices: [22.9, 25.9, 29.9], group: [22.9, 20.9] },
+  { id: "capuz", name: "Sweat com capuz", prices: [24.9, 27.9, 31.9], group: [26.9, 24.9] },
 ];
 
 export const KIDS: Piece[] = [
-  { id: "body", name: "Body de bebé", note: "3 a 24 meses", prices: [12.9], show: "12,90 €", photo: "—", kid: true },
+  { id: "body", name: "Body de bebé", note: "3 a 24 meses", prices: [11.9], show: "11,90 €", photo: "—", kid: true },
   { id: "sweatbebe", name: "Sweat de bebé", note: "6 a 24 meses", prices: [17.9], show: "17,90 €", photo: "—", kid: true },
-  { id: "tshirtk", name: "T-shirt criança", note: "Pequeno · Médio · Grande", prices: [10.9, 12.9, 14.9], show: "10,90 · 12,90 · 14,90 €", photo: "12,90 a 14,90 €", kid: true },
+  { id: "tshirtk", name: "T-shirt criança", note: "Pequeno · Médio · Grande", prices: [9.9, 12.9, 14.9], show: "9,90 · 12,90 · 14,90 €", photo: "+2 €", kid: true },
   { id: "sweatk", name: "Sweat criança", prices: [19.9], show: "19,90 €", photo: "21,90 €", kid: true },
-  { id: "capuzk", name: "Sweat criança com capuz", prices: [24.9], show: "24,90 €", photo: "—", kid: true },
+  { id: "capuzk", name: "Sweat criança com capuz", prices: [23.9], show: "23,90 €", photo: "—", kid: true },
 ];
 
 export const MUGS: Piece[] = [
