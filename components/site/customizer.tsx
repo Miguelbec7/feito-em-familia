@@ -6,18 +6,15 @@ import { ADULT, KIDS, SIZES, eur } from "@/lib/pricing";
 import { estimate } from "@/lib/estimate";
 import logo from "@/assets/logo-mark.webp";
 import { CONTACT } from "@/lib/contact";
-import { PHOTOS, type PhotoSpec } from "@/lib/photos";
+import { COLORS, PHOTOS, isDark, placePhoto } from "@/lib/photos";
+import type { Idea } from "@/lib/ideas";
 
 const PIECES = [...ADULT, ...KIDS];
 const ART: Record<string, GarmentKind> = {
   tshirt: "tee", oversize: "tee", manga: "knit", sweat: "knit", capuz: "hoodie",
   body: "tee", sweatbebe: "knit", tshirtk: "tee", sweatk: "knit", capuzk: "hoodie",
 };
-const COLORS = [
-  { name: "Branco", hex: "#F2EFE8" }, { name: "Preto", hex: "#1B1C1E" }, { name: "Azul-marinho", hex: "#1F2A44" },
-  { name: "Cinzento", hex: "#9AA0A6" }, { name: "Vermelho", hex: "#B3362B" }, { name: "Verde", hex: "#2F5D3A" },
-  { name: "Azul royal", hex: "#2D5DA8" }, { name: "Amarelo", hex: "#E5B73B" }, { name: "Rosa", hex: "#E8A5B8" }, { name: "Bege", hex: "#D8C7A8" },
-];
+
 // 1 unidade do desenho ≈ 0,5 cm na peça de adulto (o peito tem cerca de 100 unidades)
 const BOX = [{ w: 21, h: 21 }, { w: 44, h: 63 }, { w: 59, h: 74 }];
 const CM = ["10 × 10 cm", "21 × 30 cm", "28 × 35 cm"];
@@ -31,17 +28,6 @@ function place(side: Side, size: number) {
   if (side === "front") return size === 0 ? { x: 124 - w / 2, y: 78, w, h } : { x: 100 - w / 2, y: size === 1 ? 74 : 70, w, h };
   return { x: 100 - w / 2, y: 66 - size * 3, w, h };
 }
-// Peças em fotografia: tamanho do desenho em cm e posição (ver lib/photos.ts)
-const CMBOX = [[10, 10], [21, 30], [28, 35]];
-function placePhoto(spec: PhotoSpec, side: Side, size: number) {
-  const w = CMBOX[size][0] * spec.cm, h = CMBOX[size][1] * spec.cm;
-  if (side === "front") return size === 0 ? { x: spec.smallX - w / 2, y: spec.smallY, w, h } : { x: spec.chestX - w / 2, y: size === 1 ? spec.topFront : spec.topFront - 2.35 * spec.cm, w, h };
-  return { x: spec.chestX - w / 2, y: spec.topBack - size * 1.18 * spec.cm, w, h };
-}
-function isDark(hex: string) {
-  const n = parseInt(hex.slice(1), 16);
-  return ((n >> 16) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000 < 140;
-}
 
 export function Customizer() {
   const [pieceId, setPieceId] = React.useState("tshirt");
@@ -54,6 +40,21 @@ export function Customizer() {
   const [msg, setMsg] = React.useState("");
   const urls = React.useRef<string[]>([]);
   React.useEffect(() => () => urls.current.forEach(URL.revokeObjectURL), []);
+
+  React.useEffect(() => {
+    const on = (e: Event) => {
+      const d = (e as CustomEvent<Idea>).detail;
+      const c = COLORS.find((x) => x.name === d.color);
+      if (!c) return;
+      setPieceId(d.piece); setColor(c); setSide(d.side); setQty(1); setNameX(false); setPhoto(false);
+      setDesign({
+        front: d.side === "front" ? { img: null, text: d.text, size: d.size } : empty(d.size),
+        back: d.side === "back" ? { img: null, text: d.text, size: d.size } : empty(d.size),
+      });
+    };
+    window.addEventListener("idea-pick", on);
+    return () => window.removeEventListener("idea-pick", on);
+  }, []);
 
   const piece = PIECES.find((p) => p.id === pieceId)!;
   const cur = design[side];

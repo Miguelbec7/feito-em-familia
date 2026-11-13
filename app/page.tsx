@@ -2,6 +2,7 @@ import ClothingRailHero, { type RailGarment } from "@/components/ui/product-rail
 import { Header } from "@/components/site/header";
 import { Section, card } from "@/components/site/section";
 import { PriceTabs } from "@/components/site/price-tabs";
+import { Ideas } from "@/components/site/ideas";
 import { ProductShelf } from "@/components/site/product-shelf";
 import { Customizer } from "@/components/site/customizer";
 import { Calculator } from "@/components/site/calculator";
@@ -47,7 +48,7 @@ export default function Page() {
           className="min-h-[calc(100svh-3.5rem)] [&>div:nth-of-type(2)]:mt-8"
           action={
             <div className="flex flex-wrap justify-center gap-3">
-              <a href="#orcamento" className="rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-sm outline-none transition-[transform,box-shadow] hover:-translate-y-px hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">Calcular o meu preço</a>
+              <a href="#personaliza" className="rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-sm outline-none transition-[transform,box-shadow] hover:-translate-y-px hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">Calcular o meu preço</a>
               <a href="#precos" className="rounded-full border border-border px-5 py-2.5 text-sm font-medium outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring">Ver preços</a>
             </div>
           }
@@ -57,38 +58,15 @@ export default function Page() {
           <Customizer />
         </Section>
 
-        <Section eyebrow="Desenho" title="Tamanhos do desenho" sub="O preço da peça depende do tamanho do desenho.">
-          <div className="grid gap-4 sm:grid-cols-3">
-            {SIZE_CARDS.map((s) => (
-              <article key={s.name} className={`${card} flex flex-col gap-4 p-6`}>
-                <div className="flex h-24 items-end"><div aria-hidden="true" className={`${s.box} rounded-md border border-dashed border-foreground/40 bg-muted`} /></div>
-                <div>
-                  <h3 className="font-medium">{s.name} <span className="ml-1 font-mono text-xs font-normal text-muted-foreground">{s.dim}</span></h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{s.text}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </Section>
-
-        <Section id="precos" tint eyebrow="Roupa" title="Preços da roupa" sub="Preço por peça. Escolhe adulto ou bebé e criança.">
-          <PriceTabs />
-          <h3 className="mb-4 mt-12 text-sm font-medium">Extras na roupa</h3>
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {EXTRAS.map((e) => (
-              <li key={e.text} className={`${card} flex items-center gap-4 p-4`}>
-                <b className="shrink-0 whitespace-nowrap text-xl font-medium tabular-nums text-brand">{e.price}</b>
-                <span className="text-sm leading-snug text-muted-foreground">{e.text}</span>
-              </li>
-            ))}
-          </ul>
-        </Section>
-
         <Section id="presentes" eyebrow="Presentes" title="Canecas e presentes" sub="Escolhe da prateleira o que queres levar.">
           <ProductShelf />
         </Section>
 
-        <Section id="packs" tint eyebrow="Promoções" title="Packs e promoções">
+        <Section id="ideias" tint eyebrow="Ideias" title="Ideias para ti" sub="Escolhe uma e muda o que quiseres: a peça, a cor, o texto e o tamanho.">
+          <Ideas />
+        </Section>
+
+        <Section id="precos" eyebrow="Preços" title="Packs e preços">
           <div className="grid gap-4 md:grid-cols-3">
             <article className="rounded-2xl bg-foreground p-6 text-background">
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] opacity-70">Pack Família</p>
@@ -101,41 +79,61 @@ export default function Page() {
               <p className="mt-2 text-sm text-muted-foreground">Com a mesma foto.</p>
             </article>
             <article className={`${card} p-6`}>
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">Canecas para grupos</p>
-              <p className="mt-3 text-4xl font-medium tracking-tight tabular-nums">7,90 € <span className="text-base font-normal text-muted-foreground">cada</span></p>
-              <p className="mt-2 text-sm text-muted-foreground">A partir de 10 unidades.</p>
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">Grupos (10 ou mais)</p>
+              <p className="mt-3 text-4xl font-medium tracking-tight tabular-nums">desde 7,90 €</p>
+              <p className="mt-2 text-sm text-muted-foreground">Canecas e roupa para escolas, equipas e festas.</p>
             </article>
           </div>
 
-          <h3 className="mb-1 mt-12 text-sm font-medium">Preço de grupo na roupa</h3>
-          <p className="mb-4 text-sm text-muted-foreground">10 ou mais peças, para escolas, equipas, festas e empresas.</p>
-          <div className="overflow-x-auto rounded-2xl border border-border bg-card">
-            <table className="w-full min-w-[460px] text-sm">
-              <thead><tr className="border-b border-border"><th className={th}>Peça</th><th className={th}>Frente + costas + nome</th><th className={th}>Só frente</th></tr></thead>
-              <tbody className="divide-y divide-border">
-                {GROUP_TABLE.map((r) => (
-                  <tr key={r.name}><th scope="row" className="px-5 py-3.5 text-left font-medium">{r.name}</th><td className="px-5 py-3.5 tabular-nums">{r.full}</td><td className="px-5 py-3.5 tabular-nums">{r.front}</td></tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Section>
+          <details className="group mt-6 rounded-2xl border border-border bg-card">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+              Ver todos os preços (roupa, extras, grupos e Natal)
+              <span aria-hidden="true" className="text-lg leading-none transition-transform group-open:rotate-45">+</span>
+            </summary>
+            <div className="grid gap-10 border-t border-border p-6">
+              <div>
+                <h3 className="mb-4 text-sm font-medium">Roupa</h3>
+                <PriceTabs />
+                <h3 className="mb-3 mt-8 text-sm font-medium">Extras na roupa</h3>
+                <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  {EXTRAS.map((e) => (
+                    <li key={e.text} className="flex items-center gap-4 rounded-xl border border-border p-4">
+                      <b className="shrink-0 whitespace-nowrap text-xl font-medium tabular-nums text-brand">{e.price}</b>
+                      <span className="text-sm leading-snug text-muted-foreground">{e.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-        <Section id="natal" eyebrow="Natal" title="Natal, educadoras e auxiliares" sub="Encomenda com antecedência para garantir a entrega.">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {XMAS.map((g) => (
-              <article key={g.name} className={`${card} flex flex-col gap-1 p-6`}>
-                <h3 className="font-medium">{g.name}</h3>
-                {g.note && <p className="text-xs text-muted-foreground">{g.note}</p>}
-                <p className="mt-4 text-xl font-medium tabular-nums">{g.price}</p>
-              </article>
-            ))}
-            <article className={`${card} flex flex-col gap-1 p-6`}>
-              <h3 className="font-medium">Sweats de Natal com nome</h3>
-              <p className="text-xs text-muted-foreground">Preços da tabela de roupa</p>
-              <a href="#precos" className="mt-2 inline-block py-2 text-sm font-medium underline underline-offset-4">Ver preços</a>
-            </article>
-          </div>
+              <div>
+                <h3 className="mb-1 text-sm font-medium">Preço de grupo na roupa</h3>
+                <p className="mb-4 text-sm text-muted-foreground">10 ou mais peças, para escolas, equipas, festas e empresas.</p>
+                <div className="overflow-x-auto rounded-xl border border-border">
+                  <table className="w-full min-w-[460px] text-sm">
+                    <thead><tr className="border-b border-border"><th className={th}>Peça</th><th className={th}>Frente + costas + nome</th><th className={th}>Só frente</th></tr></thead>
+                    <tbody className="divide-y divide-border">
+                      {GROUP_TABLE.map((r) => (
+                        <tr key={r.name}><th scope="row" className="px-5 py-3.5 text-left font-medium">{r.name}</th><td className="px-5 py-3.5 tabular-nums">{r.full}</td><td className="px-5 py-3.5 tabular-nums">{r.front}</td></tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="mb-1 text-sm font-medium">Natal, educadoras e auxiliares</h3>
+                <p className="mb-4 text-sm text-muted-foreground">Encomenda com antecedência para garantir a entrega. Sweats de Natal com nome: preços da tabela de roupa.</p>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {XMAS.map((g) => (
+                    <li key={g.name} className="flex items-baseline justify-between gap-4 rounded-xl border border-border px-4 py-3 text-sm">
+                      <span>{g.name}{g.note && <span className="block text-xs text-muted-foreground">{g.note}</span>}</span>
+                      <b className="shrink-0 font-medium tabular-nums">{g.price}</b>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </details>
         </Section>
 
         <Section id="como" tint eyebrow="Passo a passo" title="Como funciona">
@@ -155,7 +153,7 @@ export default function Page() {
           </ul>
         </Section>
 
-        <Section id="orcamento" eyebrow="Orçamento" title="Quanto custa o meu pedido?" sub="Faz uma estimativa e envia-nos o pedido. Confirmamos o preço final com a prova.">
+        <Section id="orcamento" eyebrow="Orçamento" title="Pedido rápido" sub="Faz uma estimativa e envia-nos o pedido. Confirmamos o preço final com a prova.">
           <div className="mx-auto max-w-xl"><Calculator /></div>
         </Section>
       </main>

@@ -140,3 +140,25 @@ export const KIDSWEAT_WITH_LOGO = kRosaLogo.src;
 
 /** T-shirt oversize preta com o símbolo no peito (cabide). */
 export const OVERSIZE_WITH_LOGO = pretoLogo.src;
+
+
+export type Side = "front" | "back";
+
+export const COLORS = [
+  { name: "Branco", hex: "#F2EFE8" }, { name: "Preto", hex: "#1B1C1E" }, { name: "Azul-marinho", hex: "#1F2A44" },
+  { name: "Cinzento", hex: "#9AA0A6" }, { name: "Vermelho", hex: "#B3362B" }, { name: "Verde", hex: "#2F5D3A" },
+  { name: "Azul royal", hex: "#2D5DA8" }, { name: "Amarelo", hex: "#E5B73B" }, { name: "Rosa", hex: "#E8A5B8" }, { name: "Bege", hex: "#D8C7A8" },
+];
+
+export function isDark(hex: string) {
+  const n = parseInt(hex.slice(1), 16);
+  return ((n >> 16) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000 < 140;
+}
+
+// Tamanho do desenho em cm (pequeno, médio, grande) e posição na peça fotografada
+const CMBOX = [[10, 10], [21, 30], [28, 35]];
+export function placePhoto(spec: PhotoSpec, side: Side, size: number) {
+  const w = CMBOX[size][0] * spec.cm, h = CMBOX[size][1] * spec.cm;
+  if (side === "front") return size === 0 ? { x: spec.smallX - w / 2, y: spec.smallY, w, h } : { x: spec.chestX - w / 2, y: size === 1 ? spec.topFront : spec.topFront - 2.35 * spec.cm, w, h };
+  return { x: spec.chestX - w / 2, y: spec.topBack - size * 1.18 * spec.cm, w, h };
+}
