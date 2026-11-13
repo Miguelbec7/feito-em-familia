@@ -162,3 +162,14 @@ export function placePhoto(spec: PhotoSpec, side: Side, size: number) {
   if (side === "front") return size === 0 ? { x: spec.smallX - w / 2, y: spec.smallY, w, h } : { x: spec.chestX - w / 2, y: size === 1 ? spec.topFront : spec.topFront - 2.35 * spec.cm, w, h };
   return { x: spec.chestX - w / 2, y: spec.topBack - size * 1.18 * spec.cm, w, h };
 }
+
+
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const slug = (name: string) => name.toLowerCase().replace(" ", "-");
+
+/** Cores de uma peça fotografada, para o detalhe do cabide: frente com o símbolo e costas lisas. */
+export function variantsFor(pieceId: string) {
+  const spec = PHOTOS[pieceId];
+  if (!spec) return undefined;
+  return COLORS.map((c) => ({ name: c.name, hex: c.hex, image: `${BASE}/fotos/${pieceId}/${slug(c.name)}.webp`, backImage: spec.images[c.name] }));
+}

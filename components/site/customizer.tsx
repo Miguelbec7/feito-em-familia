@@ -53,7 +53,16 @@ export function Customizer() {
       });
     };
     window.addEventListener("idea-pick", on);
-    return () => window.removeEventListener("idea-pick", on);
+    const onRail = (e: Event) => {
+      const d = (e as CustomEvent<{ id: string; variant?: string }>).detail;
+      if (!PIECES.some((p) => p.id === d.id)) return;
+      const c = COLORS.find((x) => x.name === d.variant);
+      const size = PHOTOS[d.id]?.defaultSize ?? 1;
+      setPieceId(d.id); if (c) setColor(c); setSide("front"); setQty(1); setNameX(false); setPhoto(false);
+      setDesign({ front: { img: logo.src, text: "", size }, back: empty(size) });
+    };
+    window.addEventListener("rail-pick", onRail);
+    return () => { window.removeEventListener("idea-pick", on); window.removeEventListener("rail-pick", onRail); };
   }, []);
 
   const piece = PIECES.find((p) => p.id === pieceId)!;

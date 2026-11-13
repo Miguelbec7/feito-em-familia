@@ -26,6 +26,12 @@ export interface RailGarment {
   tag?: string;
   /** Short facts listed in the detail view. */
   details?: string[];
+  /** Cores escolhíveis no detalhe: imagem da frente (com o desenho) e das costas. */
+  variants?: { name: string; hex: string; image: string; backImage?: string }[];
+  /** Nome da cor inicial (uma das variants). */
+  variant?: string;
+  /** Texto do botão do detalhe; dispara o evento "rail-pick" com { id, variant }. */
+  cta?: string;
 }
 
 export interface ClothingRailHeroLabels {
@@ -33,6 +39,8 @@ export interface ClothingRailHeroLabels {
   back: string;
   close: string;
   show: string;
+  /** Aviso mostrado nas costas quando a peça não tem foto das costas. */
+  backNote?: string;
 }
 
 export interface ClothingRailHeroProps extends React.ComponentProps<"section"> {
@@ -1074,6 +1082,10 @@ function Detail({ uid, item, index, total, hanger, labels, reduced, source, onLi
   const spinRef = React.useRef(null as HTMLDivElement | null);
   const closeRef = React.useRef(null as HTMLButtonElement | null);
   const [side, setSide] = React.useState("front" as "front" | "back");
+  const [vi, setVi] = React.useState(() => Math.max(0, item.variants?.findIndex((v) => v.name === item.variant) ?? 0));
+  const variant = item.variants?.[vi];
+  const frontSrc = variant?.image ?? item.image;
+  const backSrc = variant ? (variant.backImage ?? variant.image) : (item.backImage ?? item.image);
   const [shown, setShown] = React.useState(false);
   const angle = React.useRef({ value: 0, target: 0, velocity: 0, raf: 0, last: 0, dragging: false, startX: 0, startAngle: 0 });
   const closing = React.useRef(false);
@@ -1176,7 +1188,7 @@ function Detail({ uid, item, index, total, hanger, labels, reduced, source, onLi
   };
 
   const stage = (
-    <div ref={figureRef} className="relative mx-auto aspect-[200/310] h-[min(44svh,560px)] max-h-full md:h-[min(62vh,560px)] origin-top">
+    <div ref={figureRef} className="relative mx-auto aspect-[200/310] h-[min(38svh,560px)] max-h-full md:h-[min(62vh,560px)] origin-top">
       <div aria-hidden="true" className="absolute left-1/2 top-[-40vh] h-[40vh] w-[3px] -translate-x-1/2 rounded-full" style={{ background: "linear-gradient(to right, color-mix(in oklab, var(--color-muted-foreground) 50%, white), var(--color-muted-foreground), color-mix(in oklab, var(--color-muted-foreground) 50%, black))", top: `calc(-40vh + ${(HOOK_TOP / VB_H) * 100}%)` }} />
       <div
         className="absolute inset-0 cursor-grab touch-pan-y active:cursor-grabbing"
@@ -1191,7 +1203,7 @@ function Detail({ uid, item, index, total, hanger, labels, reduced, source, onLi
             <div key={face} className="absolute inset-0 [backface-visibility:hidden]" style={{ transform: face === "back" ? "rotateY(180deg)" : undefined, ["--garment-color" as string]: color, ["--garment-under" as string]: mix(color, -0.42) }}>
               <Hanger uid={uid} side={face} kind={item.image ? null : kind} material={hanger} />
               {item.image
-                ? <Photo src={(face === "back" ? item.backImage : undefined) ?? item.image} alt={face === "front" ? item.name : ""} full={hanger === "none"} />
+                ? <Photo src={(face === "back" ? backSrc : frontSrc) as string} alt={face === "front" ? item.name : ""} full={hanger === "none"} />
                 : <Fabric uid={uid} kind={kind} side={face} color={color} trim={trim} />}
             </div>
           ))}
@@ -1218,6 +1230,16 @@ function Detail({ uid, item, index, total, hanger, labels, reduced, source, onLi
               {item.details.map((detail) => <li key={detail} className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">{detail}</li>)}
             </ul>
           )}
+          {item.variants && item.variants.length > 1 && (
+            <div className="grid gap-2">
+              <p className="text-xs text-muted-foreground">{variant?.name}</p>
+              <div role="group" aria-label="Cor" className="flex flex-wrap justify-center gap-2.5 md:justify-start">
+                {item.variants.map((v, i) => (
+                  <button key={v.name} type="button" aria-label={v.name} aria-pressed={i === vi} onClick={() => setVi(i)} className={`size-8 rounded-full border border-foreground/20 outline-none transition-transform focus-visible:ring-2 focus-visible:ring-ring ${i === vi ? "scale-110 ring-2 ring-foreground ring-offset-2 ring-offset-background" : "hover:scale-105"}`} style={{ background: v.hex }} />
+                ))}
+              </div>
+            </div>
+          )}
           <div role="group" aria-label={`${labels.front} / ${labels.back}`} className="mt-2 inline-flex justify-center gap-6 md:justify-start">
             {(["front", "back"] as const).map((face) => (
               <button key={face} type="button" aria-pressed={side === face} onClick={() => turnTo(face)} className={`relative px-2 py-2.5 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring ${side === face ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
@@ -1226,6 +1248,12 @@ function Detail({ uid, item, index, total, hanger, labels, reduced, source, onLi
               </button>
             ))}
           </div>
+          {labels.backNote && side === "back" && item.variants && <p className="text-xs text-muted-foreground">{labels.backNote}</p>}
+          {item.cta && (
+            <button type="button" onClick={() => { window.dispatchEvent(new CustomEvent("rail-pick", { detail: { id: item.id, variant: variant?.name } })); dismiss(); window.setTimeout(() => document.getElementById("personaliza")?.scrollIntoView({ behavior: "smooth" }), 650); }} className="mt-1 self-center rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background outline-none transition-[transform,box-shadow] hover:-translate-y-px hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background md:self-start">
+              {item.cta}
+            </button>
+          )}
         </div>
       </div>
     </div>,
