@@ -6,7 +6,7 @@ import { ADULT, KIDS, SIZES, eur } from "@/lib/pricing";
 import { estimate } from "@/lib/estimate";
 import logo from "@/assets/logo-mark.webp";
 import { CONTACT } from "@/lib/contact";
-import { SWEAT_PHOTO, SWEAT_RATIO } from "@/lib/sweat";
+import { PHOTOS, type PhotoSpec } from "@/lib/photos";
 
 const PIECES = [...ADULT, ...KIDS];
 const ART: Record<string, GarmentKind> = {
@@ -31,12 +31,12 @@ function place(side: Side, size: number) {
   if (side === "front") return size === 0 ? { x: 124 - w / 2, y: 78, w, h } : { x: 100 - w / 2, y: size === 1 ? 74 : 70, w, h };
   return { x: 100 - w / 2, y: 66 - size * 3, w, h };
 }
-// Sweat em fotografia: o peito tem cerca de 190 px para ~56 cm (≈ 3,4 px/cm)
-const PBOX = [{ w: 34, h: 34 }, { w: 71, h: 102 }, { w: 95, h: 119 }];
-function placePhoto(side: Side, size: number) {
-  const { w, h } = PBOX[size];
-  if (side === "front") return size === 0 ? { x: 262 - w / 2, y: 92, w, h } : { x: 207 - w / 2, y: size === 1 ? 92 : 84, w, h };
-  return { x: 207 - w / 2, y: 66 - size * 4, w, h };
+// Peças em fotografia: tamanho do desenho em cm e posição (ver lib/photos.ts)
+const CMBOX = [[10, 10], [21, 30], [28, 35]];
+function placePhoto(spec: PhotoSpec, side: Side, size: number) {
+  const w = CMBOX[size][0] * spec.cm, h = CMBOX[size][1] * spec.cm;
+  if (side === "front") return size === 0 ? { x: spec.smallX - w / 2, y: spec.smallY, w, h } : { x: spec.chestX - w / 2, y: size === 1 ? spec.topFront : spec.topFront - 2.35 * spec.cm, w, h };
+  return { x: spec.chestX - w / 2, y: spec.topBack - size * 1.18 * spec.cm, w, h };
 }
 function isDark(hex: string) {
   const n = parseInt(hex.slice(1), 16);
@@ -62,8 +62,9 @@ export function Customizer() {
   const both = has("front") && has("back");
   const primary = has("front") ? design.front.size : has("back") ? design.back.size : cur.size;
   const est = estimate(piece, { sizeIdx: primary, qty, extra: both, nameX, photo });
-  const photoMode = pieceId === "sweat";
-  const box = photoMode ? placePhoto(side, cur.size) : place(side, cur.size);
+  const spec = PHOTOS[pieceId];
+  const photoMode = !!spec;
+  const box = spec ? placePhoto(spec, side, cur.size) : place(side, cur.size);
   const ink = isDark(color.hex) ? "#fbf7ec" : "#2a211b";
   const fs = Math.max(6, Math.min(box.h * 0.45, (box.w / Math.max(cur.text.trim().length, 1)) * 1.7));
   const overlay = cur.img ? (
@@ -100,9 +101,9 @@ export function Customizer() {
       <div className="lg:sticky lg:top-20">
         <div className="rounded-3xl border border-border bg-muted p-6 sm:p-8">
           {photoMode ? (
-            <div className="relative mx-auto aspect-[415/474] w-full max-w-[22rem] drop-shadow-[0_18px_14px_rgba(0,0,0,0.2)]">
-              <img src={SWEAT_PHOTO[color.name]} alt={`Sweat ${color.name.toLowerCase()}`} draggable={false} className="absolute inset-0 size-full select-none" />
-              <svg aria-hidden="true" viewBox={`0 0 ${SWEAT_RATIO.w} ${SWEAT_RATIO.h}`} className="absolute inset-0 size-full overflow-visible">{overlay}</svg>
+            <div style={{ aspectRatio: `${spec.w} / ${spec.h}` }} className="relative mx-auto w-full max-w-[22rem] drop-shadow-[0_18px_14px_rgba(0,0,0,0.2)]">
+              <img src={spec.images[color.name]} alt={`${piece.name} ${color.name.toLowerCase()}`} draggable={false} className="absolute inset-0 size-full select-none" />
+              <svg aria-hidden="true" viewBox={`0 0 ${spec.w} ${spec.h}`} className="absolute inset-0 size-full overflow-visible">{overlay}</svg>
             </div>
           ) : (
             <GarmentPreview kind={ART[pieceId]} side={side} color={color.hex} className="mx-auto -mb-[28%] w-full max-w-[19rem] drop-shadow-[0_18px_14px_rgba(0,0,0,0.18)]">
