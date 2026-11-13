@@ -198,7 +198,8 @@ export function Customizer() {
     const where = [part("front"), part("back")].filter(Boolean).join(" e ");
     const text = `Olá! Quero ${est.n}× ${piece.name}, cor ${color.name}${where ? `, desenho na ${where}` : ""}${nameX ? ", com nome" : ""}${photo ? ", desenho a partir de fotografia" : ""}. Estimativa: ${eur(est.total)}. Vou enviar a imagem a seguir.`;
     if (CONTACT.whatsapp) { window.open(`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener"); setMsg(""); return; }
-    try { await navigator.clipboard.writeText(text); setMsg("Pedido copiado. Cola-o numa mensagem para nós."); } catch { setMsg(text); }
+    try { await navigator.clipboard.writeText(text); setMsg(CONTACT.instagram ? "Pedido copiado. Cola-o na conversa do Instagram que se abriu." : "Pedido copiado. Cola-o numa mensagem para nós."); } catch { setMsg(text); }
+    if (CONTACT.instagram) window.open(`https://ig.me/m/${CONTACT.instagram}`, "_blank", "noopener");
   }
 
   const chip = (on: boolean) => `rounded-full border px-4 py-2.5 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring ${on ? "border-foreground bg-foreground text-background" : "border-border bg-card hover:bg-muted"}`;
@@ -301,7 +302,7 @@ export function Customizer() {
         </div>
 
         <button type="submit" className="rounded-full bg-foreground px-5 py-3.5 text-sm font-medium text-background outline-none transition-[transform,box-shadow] hover:-translate-y-px hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">
-          {CONTACT.whatsapp ? "Enviar pedido por WhatsApp" : "Copiar o meu pedido"}
+          {CONTACT.whatsapp ? "Enviar pedido por WhatsApp" : CONTACT.instagram ? "Enviar pedido pelo Instagram" : "Copiar o meu pedido"}
         </button>
         <p role="status" className="min-h-[1.25rem] text-sm text-muted-foreground">{msg || "A imagem não é enviada pelo site: envias-nos o ficheiro na conversa."}</p>
       </div>

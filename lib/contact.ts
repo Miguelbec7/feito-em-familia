@@ -3,5 +3,5 @@
 // instagram: nome de utilizador, sem @. Ex.: "feitoemfamilia"
 export const CONTACT = {
   whatsapp: "",
-  instagram: "",
+  instagram: "_feito_em_familia",
 };

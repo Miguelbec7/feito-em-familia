@@ -44,7 +44,8 @@ export function Calculator() {
     e.preventDefault();
     const text = message();
     if (CONTACT.whatsapp) { window.open(`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener"); setMsg(""); return; }
-    try { await navigator.clipboard.writeText(text); setMsg("Pedido copiado. Cola-o numa mensagem para nós."); } catch { setMsg(text); }
+    try { await navigator.clipboard.writeText(text); setMsg(CONTACT.instagram ? "Pedido copiado. Cola-o na conversa do Instagram que se abriu." : "Pedido copiado. Cola-o numa mensagem para nós."); } catch { setMsg(text); }
+    if (CONTACT.instagram) window.open(`https://ig.me/m/${CONTACT.instagram}`, "_blank", "noopener");
   }
 
   const check = "flex items-center gap-3 py-1.5 text-sm";
@@ -76,7 +77,7 @@ export function Calculator() {
         <p className="mt-1 min-h-[1.25rem] text-xs text-muted-foreground">{hint || (n > 1 ? `${eur(unit)} por peça.` : "")}</p>
       </div>
       <button type="submit" className="rounded-full bg-foreground px-5 py-3.5 text-sm font-medium text-background outline-none transition-[transform,box-shadow] hover:-translate-y-px hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">
-        {CONTACT.whatsapp ? "Enviar pedido por WhatsApp" : "Copiar o meu pedido"}
+        {CONTACT.whatsapp ? "Enviar pedido por WhatsApp" : CONTACT.instagram ? "Enviar pedido pelo Instagram" : "Copiar o meu pedido"}
       </button>
       <p role="status" className="min-h-[1.25rem] text-sm text-muted-foreground">{msg}</p>
     </form>
