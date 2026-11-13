@@ -56,7 +56,7 @@ export type PhotoSpec = {
 export const PHOTOS: Record<string, PhotoSpec> = {
   sweat: { w: 415, h: 474, images: SWEAT_PHOTO, cm: 3.4, chestX: 207, smallX: 262, smallY: 92, topFront: 92, topBack: 66 },
   tshirt: {
-    w: 500, h: 543, cm: 5.65, chestX: 250, smallX: 324, smallY: 118, topFront: 106, topBack: 72,
+    w: 500, h: 540, cm: 5.33, chestX: 250, smallX: 326, smallY: 113, topFront: 105, topBack: 77,
     images: {
       Branco: tBranco.src, Preto: tPreto.src, "Azul-marinho": tMarinho.src, Cinzento: tCinzento.src, Vermelho: tVermelho.src,
       Verde: tVerde.src, "Azul royal": tRoyal.src, Amarelo: tAmarelo.src, Rosa: tRosa.src, Bege: tBege.src,
