@@ -6,7 +6,7 @@ import { ADULT, KIDS, SIZES, eur } from "@/lib/pricing";
 import { estimate } from "@/lib/estimate";
 import logo from "@/assets/logo-mark.webp";
 import { CONTACT } from "@/lib/contact";
-import { COLORS, PHOTOS, isDark, placePhoto, type PhotoSpec } from "@/lib/photos";
+import { COLORS, PHOTOS, hasBack, isDark, placePhoto, plainSrc, type PhotoSpec } from "@/lib/photos";
 import type { Idea } from "@/lib/ideas";
 
 const PIECES = [...ADULT, ...KIDS];
@@ -210,7 +210,7 @@ export function Customizer() {
         <div className="rounded-3xl border border-border bg-muted p-6 sm:p-8">
           {photoMode ? (
             <div style={{ aspectRatio: `${spec.w} / ${spec.h}` }} className="relative mx-auto w-full max-w-[22rem] drop-shadow-[0_18px_14px_rgba(0,0,0,0.2)]">
-              <img src={spec.images[color.name]} alt={`${piece.name} ${color.name.toLowerCase()}`} draggable={false} className="absolute inset-0 size-full select-none" />
+              <img src={plainSrc(pieceId, color.name, side)} alt={`${piece.name} ${color.name.toLowerCase()}${side === "back" ? ", costas" : ""}`} draggable={false} className="absolute inset-0 size-full select-none" />
               <svg aria-hidden="true" viewBox={`0 0 ${spec.w} ${spec.h}`} className="pointer-events-none absolute inset-0 size-full overflow-visible">{overlay}</svg>
               {handle}
             </div>
@@ -219,7 +219,7 @@ export function Customizer() {
               {overlay}
             </GarmentPreview>
           )}
-          <p className="mt-4 text-center text-xs text-muted-foreground">{cur.img === logo.src ? "Desenho de exemplo (o nosso símbolo): escolhe a tua imagem. " : ""}{photoMode && side === "back" ? "Costas: mesmo corte da peça. " : ""}Pré-visualização ilustrativa. Enviamos a prova real antes de pagares.</p>
+          <p className="mt-4 text-center text-xs text-muted-foreground">{cur.img === logo.src ? "Desenho de exemplo (o nosso símbolo): escolhe a tua imagem. " : ""}{photoMode && side === "back" ? (hasBack(pieceId) ? "Costas: vista aproximada. " : "Costas: mesmo corte da peça. ") : ""}Pré-visualização ilustrativa. Enviamos a prova real antes de pagares.</p>
         </div>
       </div>
 

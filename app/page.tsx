@@ -8,22 +8,22 @@ import { Customizer } from "@/components/site/customizer";
 import { Calculator } from "@/components/site/calculator";
 import logo from "@/assets/logo-mark.webp";
 import { SWEAT_WITH_LOGO } from "@/lib/sweat";
-import { PHOTOS, variantsFor, BODY_WITH_LOGO, HOODIE_WITH_LOGO, KIDHOODIE_WITH_LOGO, KIDSWEAT_WITH_LOGO, OVERSIZE_WITH_LOGO, TSHIRT_WITH_LOGO } from "@/lib/photos";
+import { PHOTOS, plainSrc, variantsFor, BODY_WITH_LOGO, HOODIE_WITH_LOGO, KIDHOODIE_WITH_LOGO, KIDSWEAT_WITH_LOGO, OVERSIZE_WITH_LOGO, TSHIRT_WITH_LOGO } from "@/lib/photos";
 import { CONTACT } from "@/lib/contact";
 import { EXTRAS, GROUP_TABLE, STEPS, XMAS } from "@/lib/pricing";
 
 const CTA = "Personalizar esta peça";
 
 const RAIL: RailGarment[] = [
-  { id: "tshirt", variants: variantsFor("tshirt"), variant: "Preto", backImage: PHOTOS["tshirt"].images["Preto"], cta: CTA, name: "T-shirt clássica", kind: "tee", color: "#111111", image: TSHIRT_WITH_LOGO, tag: "10,90 €", description: "Algodão 190 g com o teu desenho, nome ou fotografia.", details: ["Algodão 190 g", "10,90 · 13,90 · 15,90 €"] },
-  { id: "oversize", variants: variantsFor("oversize"), variant: "Preto", backImage: PHOTOS["oversize"].images["Preto"], cta: CTA, name: "T-shirt oversize", kind: "tee", color: "#111111", image: OVERSIZE_WITH_LOGO, tag: "17,90 €", description: "Corte largo e descontraído.", details: ["Oversize", "17,90 · 19,90 · 22,90 €"] },
-  { id: "manga", cta: CTA, name: "Manga comprida", kind: "knit", color: "#B05139", tag: "12,90 €", description: "Para os dias mais frescos.", details: ["Manga comprida", "12,90 · 15,90 · 17,90 €"] },
-  { id: "sweat", variants: variantsFor("sweat"), variant: "Azul-marinho", backImage: PHOTOS["sweat"].images["Azul-marinho"], cta: CTA, name: "Sweat sem capuz", kind: "knit", color: "#1F2A44", image: SWEAT_WITH_LOGO, tag: "22,90 €", description: "Ideal para equipas, escolas e festas.", details: ["22,90 · 25,90 · 29,90 €", "Preço de grupo desde 10"] },
-  { id: "capuz", variants: variantsFor("capuz"), variant: "Preto", backImage: PHOTOS["capuz"].images["Preto"], cta: CTA, name: "Sweat com capuz", kind: "hoodie", color: "#111111", image: HOODIE_WITH_LOGO, tag: "24,90 €", description: "A favorita para o Natal e para o Pack Família.", details: ["24,90 · 27,90 · 31,90 €"] },
-  { id: "tshirtk", cta: CTA, name: "T-shirt criança", kind: "tee", color: "#A3D3EB", tag: "9,90 €", description: "Também com a fotografia da criança.", details: ["9,90 · 12,90 · 14,90 €"] },
-  { id: "sweatk", variants: variantsFor("sweatk"), variant: "Rosa", backImage: PHOTOS["sweatk"].images["Rosa"], cta: CTA, name: "Sweat criança", kind: "knit", color: "#D9A9A0", image: KIDSWEAT_WITH_LOGO, tag: "19,90 €", description: "Para os mais pequenos, com o desenho que quiseres.", details: ["19,90 €", "Com fotografia 21,90 €"] },
-  { id: "body", variants: variantsFor("body"), variant: "Branco", backImage: PHOTOS["body"].images["Branco"], cta: CTA, name: "Body de bebé", kind: "tee", color: "#F2EFE8", image: BODY_WITH_LOGO, tag: "11,90 €", description: "Dos 3 aos 24 meses, com o desenho que quiseres.", details: ["11,90 €", "3 a 24 meses"] },
-  { id: "capuzk", variants: variantsFor("capuzk"), variant: "Branco", backImage: PHOTOS["capuzk"].images["Branco"], cta: CTA, name: "Sweat criança com capuz", kind: "hoodie", color: "#F2EFE8", image: KIDHOODIE_WITH_LOGO, tag: "23,90 €", description: "Combina com os adultos no Pack Família.", details: ["23,90 €"] },
+  { id: "tshirt", variants: variantsFor("tshirt"), variant: "Preto", backImage: plainSrc("tshirt","Preto","back"), cta: CTA, name: "T-shirt clássica", kind: "tee", color: "#111111", image: TSHIRT_WITH_LOGO, tag: "10,90 €", description: "Algodão 190 g com o teu desenho, nome ou fotografia.", details: ["Algodão 190 g", "10,90 · 13,90 · 15,90 €"] },
+  { id: "oversize", variants: variantsFor("oversize"), variant: "Preto", backImage: plainSrc("oversize","Preto","back"), cta: CTA, name: "T-shirt oversize", kind: "tee", color: "#111111", image: OVERSIZE_WITH_LOGO, tag: "17,90 €", description: "Corte largo e descontraído.", details: ["Oversize", "17,90 · 19,90 · 22,90 €"] },
+  { id: "manga", variants: variantsFor("manga"), variant: "Branco", image: variantsFor("manga")?.[0].image, backImage: plainSrc("manga","Branco","back"), cta: CTA, name: "Manga comprida", kind: "knit", color: "#B05139", tag: "12,90 €", description: "Para os dias mais frescos.", details: ["Manga comprida", "12,90 · 15,90 · 17,90 €"] },
+  { id: "sweat", variants: variantsFor("sweat"), variant: "Azul-marinho", backImage: plainSrc("sweat","Azul-marinho","back"), cta: CTA, name: "Sweat sem capuz", kind: "knit", color: "#1F2A44", image: SWEAT_WITH_LOGO, tag: "22,90 €", description: "Ideal para equipas, escolas e festas.", details: ["22,90 · 25,90 · 29,90 €", "Preço de grupo desde 10"] },
+  { id: "capuz", variants: variantsFor("capuz"), variant: "Preto", backImage: plainSrc("capuz","Preto","back"), cta: CTA, name: "Sweat com capuz", kind: "hoodie", color: "#111111", image: HOODIE_WITH_LOGO, tag: "24,90 €", description: "A favorita para o Natal e para o Pack Família.", details: ["24,90 · 27,90 · 31,90 €"] },
+  { id: "tshirtk", variants: variantsFor("tshirtk"), variant: "Branco", image: variantsFor("tshirtk")?.[0].image, backImage: plainSrc("tshirtk","Branco","back"), cta: CTA, name: "T-shirt criança", kind: "tee", color: "#A3D3EB", tag: "9,90 €", description: "Também com a fotografia da criança.", details: ["9,90 · 12,90 · 14,90 €"] },
+  { id: "sweatk", variants: variantsFor("sweatk"), variant: "Rosa", backImage: plainSrc("sweatk","Rosa","back"), cta: CTA, name: "Sweat criança", kind: "knit", color: "#D9A9A0", image: KIDSWEAT_WITH_LOGO, tag: "19,90 €", description: "Para os mais pequenos, com o desenho que quiseres.", details: ["19,90 €", "Com fotografia 21,90 €"] },
+  { id: "body", variants: variantsFor("body"), variant: "Branco", backImage: plainSrc("body","Branco","back"), cta: CTA, name: "Body de bebé", kind: "tee", color: "#F2EFE8", image: BODY_WITH_LOGO, tag: "11,90 €", description: "Dos 3 aos 24 meses, com o desenho que quiseres.", details: ["11,90 €", "3 a 24 meses"] },
+  { id: "capuzk", variants: variantsFor("capuzk"), variant: "Branco", backImage: plainSrc("capuzk","Branco","back"), cta: CTA, name: "Sweat criança com capuz", kind: "hoodie", color: "#F2EFE8", image: KIDHOODIE_WITH_LOGO, tag: "23,90 €", description: "Combina com os adultos no Pack Família.", details: ["23,90 €"] },
 ];
 
 const SIZE_CARDS = [
@@ -46,7 +46,7 @@ export default function Page() {
           eyebrow="Personalizados em Elvas"
           heading="Roupa, canecas e presentes com o teu desenho, nome ou fotografia."
           caption="Passa o rato pelo cabide, arrasta uma peça ou toca para ver as costas."
-          labels={{ front: "Frente", back: "Costas", close: "Fechar", show: "Ver", backNote: "Costas: mesmo corte da peça, sem o desenho." }}
+          labels={{ front: "Frente", back: "Costas", close: "Fechar", show: "Ver", backNote: "Costas: vista aproximada, sem o desenho." }}
           className="min-h-[calc(100svh-3.5rem)] [&>div:nth-of-type(2)]:mt-8"
           action={
             <div className="flex flex-wrap justify-center gap-3">

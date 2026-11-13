@@ -53,6 +53,26 @@ import kcAmarelo from "@/assets/capuz-crianca/amarelo.webp";
 import kcRosa from "@/assets/capuz-crianca/rosa.webp";
 import kcBege from "@/assets/capuz-crianca/bege.webp";
 import kcBrancoLogo from "@/assets/capuz-crianca/branco-logo.webp";
+import tkBranco from "@/assets/tshirt-crianca/branco.webp";
+import tkPreto from "@/assets/tshirt-crianca/preto.webp";
+import tkMarinho from "@/assets/tshirt-crianca/azul-marinho.webp";
+import tkCinzento from "@/assets/tshirt-crianca/cinzento.webp";
+import tkVermelho from "@/assets/tshirt-crianca/vermelho.webp";
+import tkVerde from "@/assets/tshirt-crianca/verde.webp";
+import tkRoyal from "@/assets/tshirt-crianca/azul-royal.webp";
+import tkAmarelo from "@/assets/tshirt-crianca/amarelo.webp";
+import tkRosa from "@/assets/tshirt-crianca/rosa.webp";
+import tkBege from "@/assets/tshirt-crianca/bege.webp";
+import mBranco from "@/assets/manga/branco.webp";
+import mPreto from "@/assets/manga/preto.webp";
+import mMarinho from "@/assets/manga/azul-marinho.webp";
+import mCinzento from "@/assets/manga/cinzento.webp";
+import mVermelho from "@/assets/manga/vermelho.webp";
+import mVerde from "@/assets/manga/verde.webp";
+import mRoyal from "@/assets/manga/azul-royal.webp";
+import mAmarelo from "@/assets/manga/amarelo.webp";
+import mRosa from "@/assets/manga/rosa.webp";
+import mBege from "@/assets/manga/bege.webp";
 import pretoLogo from "@/assets/oversize/preto-logo.webp";
 import kBranco from "@/assets/sweat-crianca/branco.webp";
 import kPreto from "@/assets/sweat-crianca/preto.webp";
@@ -81,6 +101,20 @@ export type PhotoSpec = {
 
 export const PHOTOS: Record<string, PhotoSpec> = {
   sweat: { w: 415, h: 474, images: SWEAT_PHOTO, cm: 3.4, chestX: 207, smallX: 262, smallY: 92, topFront: 92, topBack: 66 },
+  manga: {
+    w: 500, h: 529, cm: 5.4, chestX: 252, smallX: 327, smallY: 100, topFront: 92, topBack: 72, maxW: 28,
+    images: {
+      Branco: mBranco.src, Preto: mPreto.src, "Azul-marinho": mMarinho.src, Cinzento: mCinzento.src, Vermelho: mVermelho.src,
+      Verde: mVerde.src, "Azul royal": mRoyal.src, Amarelo: mAmarelo.src, Rosa: mRosa.src, Bege: mBege.src,
+    },
+  },
+  tshirtk: {
+    w: 500, h: 476, cm: 7.15, chestX: 250, smallX: 322, smallY: 110, topFront: 102, topBack: 80, maxW: 26,
+    images: {
+      Branco: tkBranco.src, Preto: tkPreto.src, "Azul-marinho": tkMarinho.src, Cinzento: tkCinzento.src, Vermelho: tkVermelho.src,
+      Verde: tkVerde.src, "Azul royal": tkRoyal.src, Amarelo: tkAmarelo.src, Rosa: tkRosa.src, Bege: tkBege.src,
+    },
+  },
   sweatbebe: {
     w: 520, h: 622, cm: 11.1, chestX: 260, smallX: 352, smallY: 110, topFront: 98, topBack: 69, defaultSize: 0, maxW: 22,
     images: {
@@ -176,9 +210,19 @@ export function placePhoto(spec: PhotoSpec, side: Side, size: number) {
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const slug = (name: string) => name.toLowerCase().replace(" ", "-");
 
+/** Peças com foto das costas (geradas a partir da frente); a sweat de bebé usa as da sweat de criança. */
+const BACK_DIR: Record<string, string> = { sweat: "sweat", oversize: "oversize", tshirt: "tshirt", manga: "manga", sweatk: "sweatk", sweatbebe: "sweatk", tshirtk: "tshirtk", capuz: "capuz", capuzk: "capuzk" };
+export const hasBack = (pieceId: string) => pieceId in BACK_DIR;
+/** Imagem da peça (sem desenho) vista de frente ou de costas, na cor pedida. */
+export function plainSrc(pieceId: string, colorName: string, side: Side) {
+  const spec = PHOTOS[pieceId];
+  if (side === "back" && BACK_DIR[pieceId]) return `${BASE}/costas/${BACK_DIR[pieceId]}/${slug(colorName)}.webp`;
+  return spec.images[colorName];
+}
+
 /** Cores de uma peça fotografada, para o detalhe do cabide: frente com o símbolo e costas lisas. */
 export function variantsFor(pieceId: string) {
   const spec = PHOTOS[pieceId];
   if (!spec) return undefined;
-  return COLORS.map((c) => ({ name: c.name, hex: c.hex, image: `${BASE}/fotos/${pieceId}/${slug(c.name)}.webp`, backImage: spec.images[c.name] }));
+  return COLORS.map((c) => ({ name: c.name, hex: c.hex, image: `${BASE}/fotos/${pieceId}/${slug(c.name)}.webp`, backImage: plainSrc(pieceId, c.name, "back") }));
 }

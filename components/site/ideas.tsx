@@ -1,6 +1,6 @@
 "use client";
 
-import { COLORS, PHOTOS, isDark, placePhoto } from "@/lib/photos";
+import { COLORS, PHOTOS, isDark, placePhoto, plainSrc } from "@/lib/photos";
 import { IDEAS, type Idea } from "@/lib/ideas";
 import { ADULT, KIDS, eur } from "@/lib/pricing";
 
@@ -24,7 +24,7 @@ function IdeaCard({ idea }: { idea: Idea }) {
       <div className="relative bg-muted px-6 pb-4 pt-6">
         {idea.side === "back" && <span className="absolute left-4 top-4 rounded-full border border-border bg-card px-2.5 py-1 text-[11px] font-medium">Nas costas</span>}
         <div style={{ aspectRatio: `${spec.w} / ${spec.h}` }} className="relative mx-auto w-full max-w-[15rem] drop-shadow-[0_14px_10px_rgba(0,0,0,0.16)]">
-          <img src={spec.images[idea.color]} alt={`${piece.name} ${idea.color.toLowerCase()} com o texto ${idea.text}`} loading="lazy" draggable={false} className="absolute inset-0 size-full select-none" />
+          <img src={plainSrc(idea.piece, idea.color, idea.side)} alt={`${piece.name} ${idea.color.toLowerCase()} com o texto ${idea.text}`} loading="lazy" draggable={false} className="absolute inset-0 size-full select-none" />
           <svg aria-hidden="true" viewBox={`0 0 ${spec.w} ${spec.h}`} className="absolute inset-0 size-full overflow-visible">
             <text x={box.x + box.w / 2} y={box.y + box.h / 2} textAnchor="middle" dominantBaseline="central" fontSize={fs} fontWeight="700" fill={isDark(color.hex) ? "#fbf7ec" : "#2a211b"} fontFamily="Georgia, serif">{idea.text}</text>
           </svg>
