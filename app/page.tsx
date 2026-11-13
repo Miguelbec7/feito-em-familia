@@ -50,13 +50,13 @@ export default function Page() {
           className="min-h-[calc(100svh-3.5rem)] [&>div:nth-of-type(2)]:mt-8"
           action={
             <div className="flex flex-wrap justify-center gap-3">
-              <a href="#personaliza" className="rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-sm outline-none transition-[transform,box-shadow] hover:-translate-y-px hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">Calcular o meu preço</a>
-              <a href="#precos" className="rounded-full border border-border px-5 py-2.5 text-sm font-medium outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring">Ver preços</a>
+              <a href="#personaliza" className="rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-sm outline-none transition-[transform,box-shadow] hover:-translate-y-px hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">Criar a minha peça</a>
+              <a href="#ideias" className="rounded-full border border-border px-5 py-2.5 text-sm font-medium outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring">Ver ideias</a>
             </div>
           }
         />
 
-        <Section id="personaliza" eyebrow="Cria a tua peça" title="Escolhe a peça, a cor e o desenho." sub="Vê já como fica e a estimativa do preço. A imagem envias tu a seguir, na conversa.">
+        <Section id="personaliza" eyebrow="Cria a tua peça" title="Cria a tua peça" sub="Escolhe a peça e a cor, põe o teu desenho onde quiseres e vê logo o preço.">
           <Customizer />
         </Section>
 

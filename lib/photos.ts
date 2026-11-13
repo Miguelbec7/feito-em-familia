@@ -75,19 +75,28 @@ export type PhotoSpec = {
   chestX: number; smallX: number; smallY: number; topFront: number; topBack: number;
   /** Tamanho de desenho inicial (0 = pequeno), para peças pequenas como o body de bebé. */
   defaultSize?: number;
+  /** Largura máxima (cm) do desenho que cabe na peça. */
+  maxW?: number;
 };
 
 export const PHOTOS: Record<string, PhotoSpec> = {
   sweat: { w: 415, h: 474, images: SWEAT_PHOTO, cm: 3.4, chestX: 207, smallX: 262, smallY: 92, topFront: 92, topBack: 66 },
+  sweatbebe: {
+    w: 520, h: 622, cm: 11.1, chestX: 260, smallX: 352, smallY: 110, topFront: 98, topBack: 69, defaultSize: 0, maxW: 22,
+    images: {
+      Branco: kBranco.src, Preto: kPreto.src, "Azul-marinho": kMarinho.src, Cinzento: kCinzento.src, Vermelho: kVermelho.src,
+      Verde: kVerde.src, "Azul royal": kRoyal.src, Amarelo: kAmarelo.src, Rosa: kRosa.src, Bege: kBege.src,
+    },
+  },
   capuzk: {
-    w: 341, h: 428, cm: 4.7, chestX: 170, smallX: 219, smallY: 170, topFront: 165, topBack: 135,
+    w: 341, h: 428, cm: 4.7, chestX: 170, smallX: 219, smallY: 170, topFront: 165, topBack: 135, maxW: 26,
     images: {
       Branco: kcBranco.src, Preto: kcPreto.src, "Azul-marinho": kcMarinho.src, Cinzento: kcCinzento.src, Vermelho: kcVermelho.src,
       Verde: kcVerde.src, "Azul royal": kcRoyal.src, Amarelo: kcAmarelo.src, Rosa: kcRosa.src, Bege: kcBege.src,
     },
   },
   body: {
-    w: 500, h: 463, cm: 9.6, chestX: 250, smallX: 305, smallY: 131, topFront: 122, topBack: 100, defaultSize: 0,
+    w: 500, h: 463, cm: 9.6, chestX: 250, smallX: 305, smallY: 131, topFront: 122, topBack: 100, defaultSize: 0, maxW: 16,
     images: {
       Branco: bBranco.src, Preto: bPreto.src, "Azul-marinho": bMarinho.src, Cinzento: bCinzento.src, Vermelho: bVermelho.src,
       Verde: bVerde.src, "Azul royal": bRoyal.src, Amarelo: bAmarelo.src, Rosa: bRosa.src, Bege: bBege.src,
@@ -108,7 +117,7 @@ export const PHOTOS: Record<string, PhotoSpec> = {
     },
   },
   sweatk: {
-    w: 520, h: 622, cm: 8.67, chestX: 260, smallX: 352, smallY: 110, topFront: 98, topBack: 69,
+    w: 520, h: 622, cm: 8.67, chestX: 260, smallX: 352, smallY: 110, topFront: 98, topBack: 69, maxW: 26,
     images: {
       Branco: kBranco.src, Preto: kPreto.src, "Azul-marinho": kMarinho.src, Cinzento: kCinzento.src, Vermelho: kVermelho.src,
       Verde: kVerde.src, "Azul royal": kRoyal.src, Amarelo: kAmarelo.src, Rosa: kRosa.src, Bege: kBege.src,
