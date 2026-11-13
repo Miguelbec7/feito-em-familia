@@ -7,7 +7,7 @@ import { Customizer } from "@/components/site/customizer";
 import { Calculator } from "@/components/site/calculator";
 import logo from "@/assets/logo-mark.webp";
 import { SWEAT_WITH_LOGO } from "@/lib/sweat";
-import { HOODIE_WITH_LOGO, KIDSWEAT_WITH_LOGO, OVERSIZE_WITH_LOGO, TSHIRT_WITH_LOGO } from "@/lib/photos";
+import { BODY_WITH_LOGO, HOODIE_WITH_LOGO, KIDSWEAT_WITH_LOGO, OVERSIZE_WITH_LOGO, TSHIRT_WITH_LOGO } from "@/lib/photos";
 import { CONTACT } from "@/lib/contact";
 import { EXTRAS, GROUP_TABLE, STEPS, XMAS } from "@/lib/pricing";
 
@@ -19,6 +19,7 @@ const RAIL: RailGarment[] = [
   { id: "capuz", name: "Sweat com capuz", kind: "hoodie", color: "#111111", image: HOODIE_WITH_LOGO, tag: "24,90 €", description: "A favorita para o Natal e para o Pack Família.", details: ["24,90 · 27,90 · 31,90 €"] },
   { id: "tshirtk", name: "T-shirt criança", kind: "tee", color: "#A3D3EB", tag: "9,90 €", description: "Também com a fotografia da criança.", details: ["9,90 · 12,90 · 14,90 €"] },
   { id: "sweatk", name: "Sweat criança", kind: "knit", color: "#D9A9A0", image: KIDSWEAT_WITH_LOGO, tag: "19,90 €", description: "Para os mais pequenos, com o desenho que quiseres.", details: ["19,90 €", "Com fotografia 21,90 €"] },
+  { id: "body", name: "Body de bebé", kind: "tee", color: "#F2EFE8", image: BODY_WITH_LOGO, tag: "11,90 €", description: "Dos 3 aos 24 meses, com o desenho que quiseres.", details: ["11,90 €", "3 a 24 meses"] },
   { id: "capuzk", name: "Sweat criança com capuz", kind: "hoodie", color: "#185B37", tag: "23,90 €", description: "Combina com os adultos no Pack Família.", details: ["23,90 €"] },
 ];
 

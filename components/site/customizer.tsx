@@ -116,7 +116,7 @@ export function Customizer() {
 
       <div className="grid gap-6">
         <label className="grid gap-1.5 text-sm font-medium">Peça
-          <select className={field} value={pieceId} onChange={(e) => { setPieceId(e.target.value); const s = PIECES.find((p) => p.id === e.target.value)!; if (s.prices.length > 1 && s.prices[design.front.size] == null) { patch("front", { size: 1 }); patch("back", { size: 1 }); } }}>
+          <select className={field} value={pieceId} onChange={(e) => { setPieceId(e.target.value); const s = PIECES.find((p) => p.id === e.target.value)!; const d = PHOTOS[e.target.value]?.defaultSize; if (d !== undefined) { patch("front", { size: d }); patch("back", { size: d }); } else if (s.prices.length > 1 && s.prices[design.front.size] == null) { patch("front", { size: 1 }); patch("back", { size: 1 }); } }}>
             <optgroup label="Adulto">{ADULT.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</optgroup>
             <optgroup label="Bebé e criança">{KIDS.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</optgroup>
           </select>
