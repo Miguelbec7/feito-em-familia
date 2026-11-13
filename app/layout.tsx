@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "Roupa, canecas e presentes personalizados com o teu desenho, nome ou fotografia. Prova antes de pagar, pronto em 7 a 10 dias.",
 };
 
-export const viewport: Viewport = { themeColor: "#ffffff" };
+export const viewport: Viewport = { themeColor: "#fbf7ec" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

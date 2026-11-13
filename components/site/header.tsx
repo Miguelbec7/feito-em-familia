@@ -5,11 +5,16 @@ const links = [
   ["Como funciona", "#como"],
 ];
 
+import logo from "@/assets/logo-mark.webp";
+
 export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-4 px-6">
-        <a href="#top" className="py-2 text-sm font-medium tracking-tight">Feito em Família</a>
+        <a href="#top" aria-label="Feito em Família, início" className="flex items-center gap-2.5 py-1.5 text-sm font-medium tracking-tight">
+          <img src={logo.src} width={44} height={44} alt="" className="size-11 rounded-full" />
+          <span className="hidden min-[380px]:inline">Feito em Família</span>
+        </a>
         <nav aria-label="Principal" className="flex items-center gap-6">
           {links.map(([label, href]) => (
             <a key={href} href={href} className="hidden text-sm text-muted-foreground transition-colors hover:text-foreground sm:block">{label}</a>

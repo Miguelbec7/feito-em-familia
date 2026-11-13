@@ -4,6 +4,7 @@ import { Section, card } from "@/components/site/section";
 import { PriceTabs } from "@/components/site/price-tabs";
 import { ProductShelf } from "@/components/site/product-shelf";
 import { Calculator } from "@/components/site/calculator";
+import logo from "@/assets/logo-mark.webp";
 import { CONTACT } from "@/lib/contact";
 import { EXTRAS, GROUP_TABLE, STEPS, XMAS } from "@/lib/pricing";
 
@@ -67,7 +68,7 @@ export default function Page() {
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {EXTRAS.map((e) => (
               <li key={e.text} className={`${card} flex items-center gap-4 p-4`}>
-                <b className="shrink-0 whitespace-nowrap text-xl font-medium tabular-nums">{e.price}</b>
+                <b className="shrink-0 whitespace-nowrap text-xl font-medium tabular-nums text-brand">{e.price}</b>
                 <span className="text-sm leading-snug text-muted-foreground">{e.text}</span>
               </li>
             ))}
@@ -152,9 +153,12 @@ export default function Page() {
 
       <footer className="border-t border-border">
         <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-10">
-          <div>
-            <p className="text-sm font-medium">Feito em Família</p>
-            <p className="text-sm text-muted-foreground">Personalizados em Elvas.</p>
+          <div className="flex items-center gap-4">
+            <img src={logo.src} width={72} height={72} alt="Feito em Família, personalizados com amor" className="size-[4.5rem] rounded-full" />
+            <div>
+              <p className="text-sm font-medium">Feito em Família</p>
+              <p className="text-sm text-muted-foreground">Personalizados com amor, em Elvas.</p>
+            </div>
           </div>
           <div className="flex gap-3 text-sm">
             {CONTACT.whatsapp && <a className="rounded-full border border-border px-4 py-2 transition-colors hover:bg-muted" href={`https://wa.me/${CONTACT.whatsapp}`}>WhatsApp</a>}
