@@ -1,24 +1,27 @@
-import type { Side } from "@/lib/photos";
+import renas from "@/assets/ideias/renas.webp";
+import familiaClaro from "@/assets/ideias/familia-claro.webp";
+import familiaAzul from "@/assets/ideias/familia-azul.webp";
+import gael from "@/assets/ideias/gael.webp";
+import ariana from "@/assets/ideias/ariana.webp";
+import bolinhos from "@/assets/ideias/bolinhos.webp";
 
 export type Idea = {
   id: string;
   title: string;
   blurb: string;
-  /** id da peça (tem de ter foto em lib/photos.ts) */
+  /** Fotografia / montagem da ideia */
+  image: string;
+  /** id da peça (tem de ter foto em lib/photos.ts) e cor sugeridas */
   piece: string;
   color: string;
-  side: Side;
-  /** 0 = pequeno, 1 = médio, 2 = grande */
-  size: number;
-  text: string;
 };
 
-/** Ideias de desenhos. Quando houver trabalhos reais de clientes, juntam-se aqui (com foto própria). */
+/** Ideias de desenhos para inspirar. Trocar/acrescentar aqui; as imagens ficam em assets/ideias. */
 export const IDEAS: Idea[] = [
-  { id: "natal", title: "Natal em família", blurb: "A mesma sweat para todos, com o nome de cada um.", piece: "sweat", color: "Vermelho", side: "front", size: 1, text: "Natal" },
-  { id: "mae", title: "Dia da Mãe", blurb: "Uma prenda simples, feita com o nome dela.", piece: "tshirt", color: "Rosa", side: "front", size: 1, text: "Mãe" },
-  { id: "pai", title: "Para o Pai", blurb: "Letras grandes nas costas.", piece: "oversize", color: "Preto", side: "back", size: 2, text: "PAI" },
-  { id: "bebe", title: "O primeiro Natal", blurb: "Para o bebé, pequenino no peito.", piece: "body", color: "Branco", side: "front", size: 0, text: "1.º Natal" },
-  { id: "turma", title: "Turma e equipa", blurb: "Costas grandes com o nome da turma ou do clube.", piece: "capuz", color: "Azul-marinho", side: "back", size: 2, text: "TURMA 4.ºB" },
-  { id: "mini", title: "Mini equipa", blurb: "Combina com os adultos, ideal para o Pack Família.", piece: "sweatk", color: "Verde", side: "front", size: 1, text: "Mini" },
+  { id: "renas", title: "Renas de Natal", blurb: "Uma rena e uma frase para cada um: Avó, Pai, Mãe…", image: renas.src, piece: "sweat", color: "Azul-marinho" },
+  { id: "familia-claro", title: "A nossa família", blurb: "A família desenhada, com chapéu de Natal e uma frase.", image: familiaClaro.src, piece: "sweat", color: "Bege" },
+  { id: "familia-azul", title: "A nossa família, em azul", blurb: "O mesmo desenho, em letras brancas sobre azul-marinho.", image: familiaAzul.src, piece: "sweat", color: "Azul-marinho" },
+  { id: "gael", title: "O meu nome no Natal", blurb: "Para os mais pequenos, com o nome e um desenho.", image: gael.src, piece: "sweatk", color: "Branco" },
+  { id: "ariana", title: "Pequena Ariana", blurb: "Sweat de criança com o nome e a personagem.", image: ariana.src, piece: "sweatk", color: "Vermelho" },
+  { id: "bolinhos", title: "Bolinhos de Natal", blurb: "Desenhos divertidos com o nome de cada um.", image: bolinhos.src, piece: "sweat", color: "Bege" },
 ];

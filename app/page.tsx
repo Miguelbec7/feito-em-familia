@@ -64,7 +64,7 @@ export default function Page() {
           <ProductShelf />
         </Section>
 
-        <Section id="ideias" tint eyebrow="Ideias" title="Ideias para ti" sub="Escolhe uma e muda o que quiseres: a peça, a cor, o texto e o tamanho.">
+        <Section id="ideias" tint eyebrow="Ideias" title="Ideias para ti" sub="Ideias de desenhos para te inspirares. Escolhe uma, diz-nos o nome ou a frase, e nós tratamos do resto.">
           <Ideas />
         </Section>
 

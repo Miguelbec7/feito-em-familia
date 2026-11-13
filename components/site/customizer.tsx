@@ -69,6 +69,7 @@ export function Customizer() {
   const [nameX, setNameX] = React.useState(false);
   const [photo, setPhoto] = React.useState(false);
   const [msg, setMsg] = React.useState("");
+  const [idea, setIdea] = React.useState<string | null>(null);
   const [dragging, setDragging] = React.useState(false);
   const urls = React.useRef<string[]>([]);
   const drag = React.useRef<{ x: number; y: number; px: number; py: number; k: number } | null>(null);
@@ -79,10 +80,10 @@ export function Customizer() {
       const d = (e as CustomEvent<Idea>).detail;
       const c = COLORS.find((x) => x.name === d.color);
       if (!c) return;
-      const mk = (): Design => ({ img: null, text: d.text, ar: textAr(d.text), wcm: 0, pos: null });
-      const t = mk(); t.wcm = clamp(fitW(d.size, t.ar), 4, maxWFor(d.piece, t.ar));
-      setPieceId(d.piece); setColor(c); setSide(d.side); setQty(1); setNameX(false); setPhoto(false);
-      setDesign({ front: d.side === "front" ? t : blank(d.piece, d.size), back: d.side === "back" ? t : blank(d.piece, d.size) });
+      const t = startTier(d.piece);
+      setPieceId(d.piece); setColor(c); setSide("front"); setQty(1); setNameX(false); setPhoto(false);
+      setIdea(d.title);
+      setDesign({ front: blank(d.piece, t), back: blank(d.piece, t) });
     };
     window.addEventListener("idea-pick", on);
     const onRail = (e: Event) => {
@@ -90,7 +91,7 @@ export function Customizer() {
       if (!PIECES.some((p) => p.id === d.id)) return;
       const c = COLORS.find((x) => x.name === d.variant);
       const t = startTier(d.id);
-      setPieceId(d.id); if (c) setColor(c); setSide("front"); setQty(1); setNameX(false); setPhoto(false);
+      setIdea(null); setPieceId(d.id); if (c) setColor(c); setSide("front"); setQty(1); setNameX(false); setPhoto(false);
       setDesign({ front: { img: logo.src, text: "", ar: LOGO_AR, wcm: clamp(fitW(t, LOGO_AR), 4, maxWFor(d.id, LOGO_AR)), pos: null }, back: blank(d.id, t) });
     };
     window.addEventListener("rail-pick", onRail);
@@ -196,7 +197,7 @@ export function Customizer() {
       return `${s === "front" ? "frente" : "costas"} (${x.w.toFixed(0)}×${x.h.toFixed(0)} cm${t ? `, texto "${t}"` : ""}${design[s].img ? ", com imagem" : ""})`;
     };
     const where = [part("front"), part("back")].filter(Boolean).join(" e ");
-    const text = `Olá! Quero ${est.n}× ${piece.name}, cor ${color.name}${where ? `, desenho na ${where}` : ""}${nameX ? ", com nome" : ""}${photo ? ", desenho a partir de fotografia" : ""}. Estimativa: ${eur(est.total)}. Vou enviar a imagem a seguir.`;
+    const text = `Olá! ${idea ? `Gostei da ideia «${idea}». ` : ""}Quero ${est.n}× ${piece.name}, cor ${color.name}${where ? `, desenho na ${where}` : ""}${nameX ? ", com nome" : ""}${photo ? ", desenho a partir de fotografia" : ""}. Estimativa: ${eur(est.total)}. Vou enviar a imagem a seguir.`;
     if (CONTACT.whatsapp) { window.open(`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener"); setMsg(""); return; }
     try { await navigator.clipboard.writeText(text); setMsg(CONTACT.instagram ? "Pedido copiado. Cola-o na conversa do Instagram que se abriu." : "Pedido copiado. Cola-o numa mensagem para nós."); } catch { setMsg(text); }
     if (CONTACT.instagram) window.open(`https://ig.me/m/${CONTACT.instagram}`, "_blank", "noopener");
@@ -219,6 +220,12 @@ export function Customizer() {
             <GarmentPreview kind={ART[pieceId]} side={side} color={color.hex} html={handle} className="mx-auto -mb-[28%] w-full max-w-[19rem] drop-shadow-[0_18px_14px_rgba(0,0,0,0.18)]">
               {overlay}
             </GarmentPreview>
+          )}
+          {idea && (
+            <p className="mt-4 flex items-center justify-center gap-2 rounded-full bg-card px-4 py-2 text-center text-xs">
+              <span>Ideia escolhida: <b className="font-medium">{idea}</b>. Envia-nos o nome ou a frase que queres.</span>
+              <button type="button" onClick={() => setIdea(null)} aria-label="Tirar a ideia" className="shrink-0 rounded-full px-2 py-1 text-muted-foreground hover:text-foreground">×</button>
+            </p>
           )}
           <p className="mt-4 text-center text-xs text-muted-foreground">{cur.img === logo.src ? "Desenho de exemplo (o nosso símbolo): escolhe a tua imagem. " : ""}{photoMode && side === "back" ? (hasBack(pieceId) ? "Costas: vista aproximada. " : "Costas: mesmo corte da peça. ") : ""}Pré-visualização ilustrativa. Enviamos a prova real antes de pagares.</p>
         </div>
