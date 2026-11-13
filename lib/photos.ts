@@ -42,6 +42,17 @@ import bAmarelo from "@/assets/body/amarelo.webp";
 import bRosa from "@/assets/body/rosa.webp";
 import bBege from "@/assets/body/bege.webp";
 import bBrancoLogo from "@/assets/body/branco-logo.webp";
+import kcBranco from "@/assets/capuz-crianca/branco.webp";
+import kcPreto from "@/assets/capuz-crianca/preto.webp";
+import kcMarinho from "@/assets/capuz-crianca/azul-marinho.webp";
+import kcCinzento from "@/assets/capuz-crianca/cinzento.webp";
+import kcVermelho from "@/assets/capuz-crianca/vermelho.webp";
+import kcVerde from "@/assets/capuz-crianca/verde.webp";
+import kcRoyal from "@/assets/capuz-crianca/azul-royal.webp";
+import kcAmarelo from "@/assets/capuz-crianca/amarelo.webp";
+import kcRosa from "@/assets/capuz-crianca/rosa.webp";
+import kcBege from "@/assets/capuz-crianca/bege.webp";
+import kcBrancoLogo from "@/assets/capuz-crianca/branco-logo.webp";
 import pretoLogo from "@/assets/oversize/preto-logo.webp";
 import kBranco from "@/assets/sweat-crianca/branco.webp";
 import kPreto from "@/assets/sweat-crianca/preto.webp";
@@ -68,6 +79,13 @@ export type PhotoSpec = {
 
 export const PHOTOS: Record<string, PhotoSpec> = {
   sweat: { w: 415, h: 474, images: SWEAT_PHOTO, cm: 3.4, chestX: 207, smallX: 262, smallY: 92, topFront: 92, topBack: 66 },
+  capuzk: {
+    w: 341, h: 428, cm: 4.7, chestX: 170, smallX: 219, smallY: 170, topFront: 165, topBack: 135,
+    images: {
+      Branco: kcBranco.src, Preto: kcPreto.src, "Azul-marinho": kcMarinho.src, Cinzento: kcCinzento.src, Vermelho: kcVermelho.src,
+      Verde: kcVerde.src, "Azul royal": kcRoyal.src, Amarelo: kcAmarelo.src, Rosa: kcRosa.src, Bege: kcBege.src,
+    },
+  },
   body: {
     w: 500, h: 463, cm: 9.6, chestX: 250, smallX: 305, smallY: 131, topFront: 122, topBack: 100, defaultSize: 0,
     images: {
@@ -104,6 +122,9 @@ export const PHOTOS: Record<string, PhotoSpec> = {
     },
   },
 };
+
+/** Sweat de criança com capuz branca com o símbolo no peito (cabide). */
+export const KIDHOODIE_WITH_LOGO = kcBrancoLogo.src;
 
 /** Body de bebé branco com o símbolo no peito (cabide). */
 export const BODY_WITH_LOGO = bBrancoLogo.src;
