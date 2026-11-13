@@ -5,6 +5,7 @@ import gael from "@/assets/ideias/gael.webp";
 import ariana from "@/assets/ideias/ariana.webp";
 import bolinhos from "@/assets/ideias/bolinhos.webp";
 
+import gatinho from "@/assets/ideias/gatinho-letra.webp";
 import bodyPai from "@/assets/ideias/body-pai-natal.webp";
 import menina from "@/assets/ideias/menina-natal.webp";
 import dino from "@/assets/ideias/dinossauros.webp";
@@ -35,6 +36,7 @@ export const IDEAS: Idea[] = [
   { id: "dino", title: "Dinossauros de Natal", blurb: "Para quem gosta de dinossauros, com o nome.", image: dino.src, piece: "sweatk", color: "Verde" },
   { id: "biscoitos", title: "Biscoitos de Natal", blurb: "Biscoitos, quebra-nozes e o nome da criança.", image: biscoitos.src, piece: "sweatk", color: "Vermelho" },
   { id: "polo", title: "Polo Norte", blurb: "Um passeio de trenó, com o nome.", image: polo.src, piece: "sweatk", color: "Verde" },
+  { id: "gatinho", title: "A letra e o gatinho", blurb: "A inicial do nome com um desenho e o nome por baixo.", image: gatinho.src, piece: "sweatk", color: "Rosa" },
   { id: "body-pai-natal", title: "O meu primeiro Natal", blurb: "Body de bebé com o Pai Natal.", image: bodyPai.src, piece: "body", color: "Branco" },
   { id: "body-rena", title: "O meu primeiro Natal, com rena", blurb: "Body de bebé com uma rena e o nome do bebé.", image: bodyRena.src, piece: "body", color: "Branco" },
 ];
