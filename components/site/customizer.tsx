@@ -4,6 +4,7 @@ import * as React from "react";
 import { GarmentPreview, type GarmentKind } from "@/components/ui/product-rail-gallery";
 import { ADULT, KIDS, SIZES, eur } from "@/lib/pricing";
 import { estimate } from "@/lib/estimate";
+import logo from "@/assets/logo-mark.webp";
 import { CONTACT } from "@/lib/contact";
 import { SWEAT_PHOTO, SWEAT_RATIO } from "@/lib/sweat";
 
@@ -46,7 +47,7 @@ export function Customizer() {
   const [pieceId, setPieceId] = React.useState("tshirt");
   const [color, setColor] = React.useState(COLORS[2]);
   const [side, setSide] = React.useState<Side>("front");
-  const [design, setDesign] = React.useState<Record<Side, Design>>({ front: empty(1), back: empty(1) });
+  const [design, setDesign] = React.useState<Record<Side, Design>>({ front: { img: logo.src, text: "", size: 1 }, back: empty(1) });
   const [qty, setQty] = React.useState(1);
   const [nameX, setNameX] = React.useState(false);
   const [photo, setPhoto] = React.useState(false);
@@ -108,7 +109,7 @@ export function Customizer() {
               {overlay}
             </GarmentPreview>
           )}
-          <p className="mt-4 text-center text-xs text-muted-foreground">{photoMode && side === "back" ? "Costas: mesmo corte da peça. " : ""}Pré-visualização ilustrativa. Enviamos a prova real antes de pagares.</p>
+          <p className="mt-4 text-center text-xs text-muted-foreground">{cur.img === logo.src ? "Desenho de exemplo (o nosso símbolo): escolhe a tua imagem. " : ""}{photoMode && side === "back" ? "Costas: mesmo corte da peça. " : ""}Pré-visualização ilustrativa. Enviamos a prova real antes de pagares.</p>
         </div>
       </div>
 

@@ -6,7 +6,7 @@ import { ProductShelf } from "@/components/site/product-shelf";
 import { Customizer } from "@/components/site/customizer";
 import { Calculator } from "@/components/site/calculator";
 import logo from "@/assets/logo-mark.webp";
-import { SWEAT_PHOTO } from "@/lib/sweat";
+import { SWEAT_WITH_LOGO } from "@/lib/sweat";
 import { CONTACT } from "@/lib/contact";
 import { EXTRAS, GROUP_TABLE, STEPS, XMAS } from "@/lib/pricing";
 
@@ -14,7 +14,7 @@ const RAIL: RailGarment[] = [
   { id: "tshirt", name: "T-shirt clássica", kind: "tee", color: "#EFEBE2", tag: "11,90 €", description: "Algodão 190 g com o teu desenho, nome ou fotografia.", details: ["Algodão 190 g", "11,90 · 14,90 · 16,90 €"] },
   { id: "oversize", name: "T-shirt oversize", kind: "tee", color: "#DE9C31", tag: "19,90 €", description: "Corte largo e descontraído.", details: ["Oversize", "19,90 · 22,90 · 26,90 €"] },
   { id: "manga", name: "Manga comprida", kind: "knit", color: "#B05139", tag: "14,90 €", description: "Para os dias mais frescos.", details: ["Manga comprida", "14,90 · 17,90 €"] },
-  { id: "sweat", name: "Sweat sem capuz", kind: "knit", color: "#1F2A44", image: SWEAT_PHOTO["Azul-marinho"], tag: "24,90 €", description: "Ideal para equipas, escolas e festas.", details: ["24,90 · 29,90 · 34,90 €", "Preço de grupo desde 10"] },
+  { id: "sweat", name: "Sweat sem capuz", kind: "knit", color: "#1F2A44", image: SWEAT_WITH_LOGO, tag: "24,90 €", description: "Ideal para equipas, escolas e festas.", details: ["24,90 · 29,90 · 34,90 €", "Preço de grupo desde 10"] },
   { id: "capuz", name: "Sweat com capuz", kind: "hoodie", color: "#A0A5AB", tag: "29,90 €", description: "A favorita para o Natal e para o Pack Família.", details: ["29,90 · 32,90 · 36,90 €"] },
   { id: "tshirtk", name: "T-shirt criança", kind: "tee", color: "#A3D3EB", tag: "10,90 €", description: "Também com a fotografia da criança.", details: ["10,90 · 12,90 · 14,90 €"] },
   { id: "capuzk", name: "Sweat criança com capuz", kind: "hoodie", color: "#185B37", tag: "24,90 €", description: "Combina com os adultos no Pack Família.", details: ["24,90 €"] },

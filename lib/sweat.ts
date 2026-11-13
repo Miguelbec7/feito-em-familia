@@ -1,3 +1,4 @@
+import marinhoLogo from "@/assets/sweat/azul-marinho-logo.webp";
 import branco from "@/assets/sweat/branco.webp";
 import preto from "@/assets/sweat/preto.webp";
 import marinho from "@/assets/sweat/azul-marinho.webp";
@@ -14,4 +15,6 @@ export const SWEAT_PHOTO: Record<string, string> = {
   Branco: branco.src, Preto: preto.src, "Azul-marinho": marinho.src, Cinzento: cinzento.src, Vermelho: vermelho.src,
   Verde: verde.src, "Azul royal": royal.src, Amarelo: amarelo.src, Rosa: rosa.src, Bege: bege.src,
 };
+/** Sweat azul-marinho com o símbolo Feito em Família no peito (para o cabide). */
+export const SWEAT_WITH_LOGO = marinhoLogo.src;
 export const SWEAT_RATIO = { w: 415, h: 474 };
