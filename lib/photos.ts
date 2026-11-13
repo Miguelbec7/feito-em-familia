@@ -10,6 +10,17 @@ import amarelo from "@/assets/oversize/amarelo.webp";
 import rosa from "@/assets/oversize/rosa.webp";
 import bege from "@/assets/oversize/bege.webp";
 import pretoLogo from "@/assets/oversize/preto-logo.webp";
+import kBranco from "@/assets/sweat-crianca/branco.webp";
+import kPreto from "@/assets/sweat-crianca/preto.webp";
+import kMarinho from "@/assets/sweat-crianca/azul-marinho.webp";
+import kCinzento from "@/assets/sweat-crianca/cinzento.webp";
+import kVermelho from "@/assets/sweat-crianca/vermelho.webp";
+import kVerde from "@/assets/sweat-crianca/verde.webp";
+import kRoyal from "@/assets/sweat-crianca/azul-royal.webp";
+import kAmarelo from "@/assets/sweat-crianca/amarelo.webp";
+import kRosa from "@/assets/sweat-crianca/rosa.webp";
+import kBege from "@/assets/sweat-crianca/bege.webp";
+import kRosaLogo from "@/assets/sweat-crianca/rosa-logo.webp";
 
 /** Peça fotografada: imagens por cor e onde ficam o peito e as costas (em pixéis da imagem). */
 export type PhotoSpec = {
@@ -22,6 +33,13 @@ export type PhotoSpec = {
 
 export const PHOTOS: Record<string, PhotoSpec> = {
   sweat: { w: 415, h: 474, images: SWEAT_PHOTO, cm: 3.4, chestX: 207, smallX: 262, smallY: 92, topFront: 92, topBack: 66 },
+  sweatk: {
+    w: 520, h: 622, cm: 8.67, chestX: 260, smallX: 352, smallY: 110, topFront: 98, topBack: 69,
+    images: {
+      Branco: kBranco.src, Preto: kPreto.src, "Azul-marinho": kMarinho.src, Cinzento: kCinzento.src, Vermelho: kVermelho.src,
+      Verde: kVerde.src, "Azul royal": kRoyal.src, Amarelo: kAmarelo.src, Rosa: kRosa.src, Bege: kBege.src,
+    },
+  },
   oversize: {
     w: 600, h: 704, cm: 5.83, chestX: 300, smallX: 384, smallY: 119, topFront: 105, topBack: 70,
     images: {
@@ -30,6 +48,9 @@ export const PHOTOS: Record<string, PhotoSpec> = {
     },
   },
 };
+
+/** Sweat de criança rosa com o símbolo no peito (cabide). */
+export const KIDSWEAT_WITH_LOGO = kRosaLogo.src;
 
 /** T-shirt oversize preta com o símbolo no peito (cabide). */
 export const OVERSIZE_WITH_LOGO = pretoLogo.src;
