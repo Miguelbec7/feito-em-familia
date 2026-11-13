@@ -65,9 +65,9 @@ export const SHELVES: { title: string; items: ShelfItem[] }[] = [
   {
     title: "Canecas",
     items: [
-      { id: "m-nome", name: "Caneca com nome", price: "8,90 €", kind: "mug", art: "nome", color: "#E9E4D8", pick: "m-nome" },
-      { id: "m-foto", name: "Caneca com foto", price: "9,90 €", kind: "mug", art: "foto", color: "#F2F0EA", pick: "m-foto" },
-      { id: "m-design", name: "Caneca com design completo", price: "11,90 €", kind: "mug", art: "design", color: "#DE9C31", pick: "m-design" },
+      { id: "m-nome", name: "Caneca com nome", note: "Só em branco", price: "8,90 €", kind: "mug", art: "nome", color: "#E9E4D8", pick: "m-nome" },
+      { id: "m-foto", name: "Caneca com foto", note: "Só em branco", price: "9,90 €", kind: "mug", art: "foto", color: "#F2F0EA", pick: "m-foto" },
+      { id: "m-design", name: "Caneca com design completo", note: "Só em branco", price: "11,90 €", kind: "mug", art: "design", color: "#DE9C31", pick: "m-design" },
       { id: "g-magica", name: "Caneca mágica", note: "Sujeita a stock", price: "14,90 €", kind: "magic", color: "#16181B", pick: "g-magica" },
     ],
   },

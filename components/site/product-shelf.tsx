@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import mugPhoto from "@/assets/mug/caneca-branca.webp";
 import { SHELVES, type ShelfItem } from "@/lib/pricing";
 
 function shade(c: string, pct: number) {
@@ -51,7 +52,49 @@ function Keychain({ color, x = 0, y = 0, s = 1 }: { color: string; x?: number; y
   );
 }
 
+// Caneca branca em fotografia (397 × 403) com o desenho por cima. A face visível vai de x≈120 a x≈390.
+function MugPhoto({ art }: { art?: ShelfItem["art"] }) {
+  return (
+    <g>
+      <defs>
+        <linearGradient id="mug-fade" x1="0" x2="1">
+          <stop offset="0" stopColor="#8a8a8a" /><stop offset="0.5" stopColor="#fff" /><stop offset="1" stopColor="#8a8a8a" />
+        </linearGradient>
+        <mask id="mug-mask" maskUnits="userSpaceOnUse" x="116" y="100" width="276" height="290">
+          <rect x="116" y="100" width="276" height="290" fill="url(#mug-fade)" />
+        </mask>
+      </defs>
+      <image href={mugPhoto.src} width="397" height="403" />
+      <g mask="url(#mug-mask)" transform="translate(254 0) scale(0.93 1) translate(-254 0)">
+        {art === "nome" && <text x="254" y="262" textAnchor="middle" fontSize="84" fontWeight="700" fontStyle="italic" fill="#2b2b2b" fontFamily="Georgia, serif">Ana</text>}
+        {art === "foto" && (
+          <g>
+            <rect x="184" y="178" width="140" height="128" rx="6" fill="#fff" stroke="#00000022" />
+            <rect x="194" y="188" width="120" height="86" fill="#A3D3EB" />
+            <circle cx="288" cy="212" r="13" fill="#F2B134" />
+            <path d="M194,274 L230,226 L252,252 L268,236 L314,274 Z" fill="#185B37" />
+          </g>
+        )}
+        {art === "design" && (
+          <g fill="#A9392B">
+            {[0, 1, 2].flatMap((r) => [0, 1, 2].map((c) => (
+              <path key={`${r}${c}`} transform={`translate(${176 + c * 54 + (r % 2) * 26} ${150 + r * 56}) scale(1.9)`} d="M8,14 C-4,5 2,-3 8,3 C14,-3 20,5 8,14 Z" />
+            )))}
+          </g>
+        )}
+      </g>
+    </g>
+  );
+}
+
 function Illustration({ item }: { item: ShelfItem }) {
+  if (item.kind === "mug") {
+    return (
+      <svg viewBox="0 0 397 468" preserveAspectRatio="xMidYMax meet" className="h-full w-full overflow-visible" aria-hidden="true">
+        <MugPhoto art={item.art} />
+      </svg>
+    );
+  }
   return (
     <svg viewBox="0 0 120 130" className="h-full w-full overflow-visible" aria-hidden="true">
       <defs>
@@ -66,7 +109,7 @@ function Illustration({ item }: { item: ShelfItem }) {
           <stop offset="0.45" stopColor="#fff" stopOpacity="0" />
         </linearGradient>
       </defs>
-      {(item.kind === "mug" || item.kind === "magic") && <MugBody color={item.color} art={item.art} magic={item.kind === "magic"} />}
+      {item.kind === "magic" && <MugBody color={item.color} magic />}
       {item.kind === "keychain" && <Keychain color={item.color} y={24} />}
       {item.kind === "plate" && (
         <g transform={item.id === "g-placa2" ? "translate(2 17) scale(1.05)" : "translate(14 32) scale(0.9)"}>
@@ -79,7 +122,7 @@ function Illustration({ item }: { item: ShelfItem }) {
       )}
       {item.kind === "combo" && (
         <g>
-          <g transform="translate(-14 21) scale(0.82)"><MugBody color="#F2F0EA" art="foto" /></g>
+          <g transform="translate(-2 30) scale(0.2)"><MugPhoto art="foto" /></g>
           <Keychain color={item.color} x={50} y={48} s={0.72} />
         </g>
       )}
