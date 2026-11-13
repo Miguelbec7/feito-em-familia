@@ -20,6 +20,17 @@ import tAmarelo from "@/assets/tshirt/amarelo.webp";
 import tRosa from "@/assets/tshirt/rosa.webp";
 import tBege from "@/assets/tshirt/bege.webp";
 import tPretoLogo from "@/assets/tshirt/preto-logo.webp";
+import cBranco from "@/assets/capuz/branco.webp";
+import cPreto from "@/assets/capuz/preto.webp";
+import cMarinho from "@/assets/capuz/azul-marinho.webp";
+import cCinzento from "@/assets/capuz/cinzento.webp";
+import cVermelho from "@/assets/capuz/vermelho.webp";
+import cVerde from "@/assets/capuz/verde.webp";
+import cRoyal from "@/assets/capuz/azul-royal.webp";
+import cAmarelo from "@/assets/capuz/amarelo.webp";
+import cRosa from "@/assets/capuz/rosa.webp";
+import cBege from "@/assets/capuz/bege.webp";
+import cPretoLogo from "@/assets/capuz/preto-logo.webp";
 import pretoLogo from "@/assets/oversize/preto-logo.webp";
 import kBranco from "@/assets/sweat-crianca/branco.webp";
 import kPreto from "@/assets/sweat-crianca/preto.webp";
@@ -51,6 +62,13 @@ export const PHOTOS: Record<string, PhotoSpec> = {
       Verde: tVerde.src, "Azul royal": tRoyal.src, Amarelo: tAmarelo.src, Rosa: tRosa.src, Bege: tBege.src,
     },
   },
+  capuz: {
+    w: 440, h: 588, cm: 5.06, chestX: 220, smallX: 299, smallY: 272, topFront: 269, topBack: 205,
+    images: {
+      Branco: cBranco.src, Preto: cPreto.src, "Azul-marinho": cMarinho.src, Cinzento: cCinzento.src, Vermelho: cVermelho.src,
+      Verde: cVerde.src, "Azul royal": cRoyal.src, Amarelo: cAmarelo.src, Rosa: cRosa.src, Bege: cBege.src,
+    },
+  },
   sweatk: {
     w: 520, h: 622, cm: 8.67, chestX: 260, smallX: 352, smallY: 110, topFront: 98, topBack: 69,
     images: {
@@ -66,6 +84,9 @@ export const PHOTOS: Record<string, PhotoSpec> = {
     },
   },
 };
+
+/** Sweat com capuz preta com o símbolo no peito (cabide). */
+export const HOODIE_WITH_LOGO = cPretoLogo.src;
 
 /** T-shirt clássica preta com o símbolo no peito (cabide). */
 export const TSHIRT_WITH_LOGO = tPretoLogo.src;
