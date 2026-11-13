@@ -1,4 +1,5 @@
 const links = [
+  ["Personaliza", "#personaliza"],
   ["Preços", "#precos"],
   ["Presentes", "#presentes"],
   ["Packs", "#packs"],

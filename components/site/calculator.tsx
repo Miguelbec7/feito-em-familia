@@ -3,6 +3,7 @@
 import * as React from "react";
 import { ADULT, KIDS, MUGS, PRESENTS, SIZES, eur, type Piece } from "@/lib/pricing";
 import { CONTACT } from "@/lib/contact";
+import { estimate } from "@/lib/estimate";
 
 const GROUPS: [string, Piece[]][] = [["Adulto", ADULT], ["Bebé e criança", KIDS], ["Canecas", MUGS], ["Presentes", PRESENTS]];
 const ALL = GROUPS.flatMap(([, items]) => items);
@@ -29,25 +30,7 @@ export function Calculator() {
 
   const piece = ALL.find((p) => p.id === id)!;
   const single = piece.prices.length === 1;
-  const idx = single ? 0 : piece.prices[sizeIdx] != null ? sizeIdx : piece.prices.findIndex((v) => v != null);
-  const noExtras = !!(piece.mug || piece.flat);
-  const canPhoto = !noExtras && piece.photo !== "—";
-  const n = Math.max(1, Math.min(500, qty || 1));
-
-  let unit = piece.prices[idx] ?? 0;
-  let hint = "";
-  if (piece.mug && n >= 10) { unit = 7.9; hint = "Preço de grupo aplicado (10 ou mais)."; }
-  else if (n >= 10 && piece.group) {
-    const full = extra && nameX;
-    unit = piece.group[full ? 0 : 1];
-    hint = full ? "Preço de grupo: frente + costas + nome." : "Preço de grupo: só frente. Marca desenho extra e nome para frente + costas + nome.";
-  } else {
-    if (extra && !noExtras) unit += piece.kid ? 4 : 5;
-    if (nameX && !noExtras) unit += 2;
-    if (photo && canPhoto) unit += 2;
-    if (n >= 10 && !noExtras) hint = "Para 10 ou mais peças, pede-nos o preço de grupo.";
-  }
-  const total = unit * n;
+  const { unit, total, n, idx, hint, noExtras, canPhoto } = estimate(piece, { sizeIdx, qty, extra, nameX, photo });
 
   function message() {
     const bits = [`Olá! Gostava de pedir: ${n}× ${piece.name}`];

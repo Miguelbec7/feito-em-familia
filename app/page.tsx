@@ -3,6 +3,7 @@ import { Header } from "@/components/site/header";
 import { Section, card } from "@/components/site/section";
 import { PriceTabs } from "@/components/site/price-tabs";
 import { ProductShelf } from "@/components/site/product-shelf";
+import { Customizer } from "@/components/site/customizer";
 import { Calculator } from "@/components/site/calculator";
 import logo from "@/assets/logo-mark.webp";
 import { CONTACT } from "@/lib/contact";
@@ -47,6 +48,10 @@ export default function Page() {
             </div>
           }
         />
+
+        <Section id="personaliza" eyebrow="Cria a tua peça" title="Escolhe a peça, a cor e o desenho." sub="Vê já como fica e a estimativa do preço. A imagem envias tu a seguir, na conversa.">
+          <Customizer />
+        </Section>
 
         <Section eyebrow="Desenho" title="Tamanhos do desenho" sub="O preço da peça depende do tamanho do desenho.">
           <div className="grid gap-4 sm:grid-cols-3">

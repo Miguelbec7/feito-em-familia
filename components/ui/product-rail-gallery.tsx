@@ -1233,4 +1233,28 @@ function Detail({ uid, item, index, total, hanger, labels, reduced, source, onLi
   );
 }
 
+/** Peça desenhada (frente ou costas) com uma camada SVG por cima, nas mesmas coordenadas (200 × 310), para pré-visualizar desenhos. */
+export function GarmentPreview({ kind, side = "front", color, trim, className, children }: {
+  kind: GarmentKind;
+  side?: "front" | "back";
+  color: string;
+  trim?: string;
+  className?: string;
+  children?: React.ReactNode;
+}) {
+  const uid = React.useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  return (
+    <div className={`relative aspect-[200/310] ${className ?? ""}`} style={{ ["--garment-color" as string]: color, ["--garment-under" as string]: mix(color, -0.42) }}>
+      <Defs uid={uid} />
+      <Hanger uid={uid} side={side} kind={kind} material="none" />
+      <Fabric uid={uid} kind={kind} side={side} color={color} trim={trim ?? mix(color, -0.12)} />
+      {children && (
+        <svg aria-hidden="true" viewBox={`0 0 ${VB_W} ${VB_H}`} preserveAspectRatio="xMidYMin meet" className="absolute inset-0 size-full overflow-visible">
+          {children}
+        </svg>
+      )}
+    </div>
+  );
+}
+
 export default ClothingRailHero;
